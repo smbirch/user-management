@@ -1,34 +1,17 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
-import com.cooksys.groupfinal.entities.Announcement;
-import com.cooksys.groupfinal.entities.Company;
-import com.cooksys.groupfinal.entities.Project;
-import com.cooksys.groupfinal.entities.Team;
-import com.cooksys.groupfinal.entities.User;
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.entities.*;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.AnnouncementMapper;
-import com.cooksys.groupfinal.mappers.ProjectMapper;
-import com.cooksys.groupfinal.mappers.TeamMapper;
-import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.mappers.*;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
+import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +19,10 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
 	private final TeamRepository teamRepository;
+
+	private final ProjectRepository projectRepository;
 	private final FullUserMapper fullUserMapper;
+	private final BasicUserMapper basicUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
@@ -56,6 +42,14 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return team.get();
     }
+
+	private Project findProject(Long id) {
+		Optional<Project> project = projectRepository.findById(id);
+		if (project.isEmpty()) {
+			throw new NotFoundException("A project with the provided id does not exist.");
+		}
+		return project.get();
+	}
 	
 	@Override
 	public Set<FullUserDto> getAllUsers(Long id) {
@@ -75,11 +69,30 @@ public class CompanyServiceImpl implements CompanyService {
 		return announcementMapper.entitiesToDtos(sortedSet);
 	}
 
+
 	@Override
 	public Set<TeamDto> getAllTeams(Long id) {
 		Company company = findCompany(id);
 		return teamMapper.entitiesToDtos(company.getTeams());
 	}
+
+	@Override
+	public TeamDto createTeam(Long companyId, TeamDto teamDto) {
+
+		Company company = findCompany(companyId);
+		Team team = new Team();
+
+		team.setCompany(company);
+		team.setName(teamDto.getName());
+		team.setDescription(teamDto.getDescription());
+
+		Set<BasicUserDto> users = new HashSet<>();
+		users.addAll(teamDto.getTeammates());
+		team.setTeammates(basicUserMapper.requestDtosToEntities(teamDto.getTeammates()));
+
+		return teamMapper.entityToDto(teamRepository.saveAndFlush(team));
+	}
+
 
 	@Override
 	public Set<ProjectDto> getAllProjects(Long companyId, Long teamId) {
@@ -93,5 +106,30 @@ public class CompanyServiceImpl implements CompanyService {
 		filteredProjects.removeIf(project -> !project.isActive());
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
+
+	@Override
+	public ProjectDto getProject(Long companyId, Long teamId, Long projectId) {
+		findCompany(companyId);
+		findTeam(teamId);
+		Project project = findProject(projectId);
+		return projectMapper.entityToDto(project);
+
+	}
+
+	@Override
+	public ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto) {
+		findCompany(companyId);
+		Team team = findTeam(teamId);
+		Project project = new Project();
+
+		project.setName(projectDto.getName());
+		project.setDescription(projectDto.getDescription());
+		project.setTeam(team);
+		project.setActive(projectDto.isActive());
+
+		return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
+
+	}
+
 
 }
