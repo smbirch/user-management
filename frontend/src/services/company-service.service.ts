@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User
- } from 'src/models/user';
+import {Company} from "../models/company";
+import { Timestamp } from "rxjs";
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,9 +13,8 @@ export class CompanyServiceService {
 
   constructor(private http: HttpClient) { }
 
-  public getCompanyUserById(id: number){
-    return this.http.get<User>(`{this.companyUrl}/{id}/users`);
-  }
 
-  
+  getCompanies() {
+    return this.http.get<Company[]>(`{this.companyUrl}/all`);
+  }
 }

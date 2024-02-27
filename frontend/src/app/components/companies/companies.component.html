@@ -1,7 +1,8 @@
-<p>companies works!</p>
-<select name="" id="">
-    <option value="FedEx"></option>
-    <option value="Cook Systems"></option>
-    <option value="Google"></option>
-</select>
-<button (click)="goHome()">Go Home</button>
+<div class="companies-container">
+  <div class="content">
+    <h2>Select Company</h2>
+    <select name="company" id="companySelect">
+      <option *ngFor="let company of companies" [value]="company.id">{{ company.name }}</option>
+    </select>
+  </div>
+</div>
