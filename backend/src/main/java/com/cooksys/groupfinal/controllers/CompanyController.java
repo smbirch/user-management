@@ -1,19 +1,6 @@
 package com.cooksys.groupfinal.controllers;
 
-import java.util.Set;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.CompanyDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.services.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +31,8 @@ public class CompanyController {
     }
 	
     @PostMapping("/{companyId}/announcements")
-    public AnnouncementDto createAnnouncement(@PathVariable Long companyId, @RequestBody AnnouncementDto announcementDto) {
-        return companyService.createAnnouncement(announcementDto);
+    public AnnouncementDto createAnnouncement(@PathVariable Long companyId, @RequestBody AnnouncementDto announcementDto, @RequestBody BasicUserDto basicUserDto) {
+        return companyService.createAnnouncement(companyId, announcementDto, basicUserDto);
     }
     
 	@GetMapping("/{companyId}/teams")
@@ -54,8 +41,8 @@ public class CompanyController {
     }
 
     @PostMapping("/{id}/teams")
-    public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto) {
-        return companyService.createTeam(companyId, teamDto);
+    public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto, @RequestBody BasicUserDto basicUserDto) {
+        return companyService.createTeam(companyId, teamDto, basicUserDto);
 
     }
 	
@@ -138,13 +125,13 @@ public class CompanyController {
     }
 
     @PostMapping("/{companyId}/teams/{teamId}/projects")
-    public ProjectDto createProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectDto projectDto) {
-        return companyService.createProject(companyId, teamId, projectDto);
+    public ProjectDto createProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectDto projectDto, BasicUserDto basicUserDto) {
+        return companyService.createProject(companyId, teamId, projectDto, basicUserDto);
     }
 
     @PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
-    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectDto projectDto) {
-        return companyService.updateProject(companyId, teamId, projectId, projectDto);
+    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectDto projectDto, BasicUserDto basicUserDto) {
+        return companyService.updateProject(companyId, teamId, projectId, projectDto, basicUserDto);
     }
 
 
