@@ -1,7 +1,6 @@
 package com.cooksys.groupfinal.services.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
+import com.cooksys.groupfinal.dtos.CompanyDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
@@ -19,12 +19,17 @@ import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.AnnouncementMapper;
+import com.cooksys.groupfinal.mappers.CompanyMapper;
 import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.mappers.TeamMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.repositories.AnnouncementRepository;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
+import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
@@ -40,6 +45,9 @@ public class CompanyServiceImpl implements CompanyService {
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
+	private final AnnouncementRepository announcementRepository;
+	private final ProjectRepository projectRepository;
+	private final CompanyMapper companyMapper;
 	
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
@@ -50,15 +58,32 @@ public class CompanyServiceImpl implements CompanyService {
     }
 	
 	private Team findTeam(Long id) {
-        Optional<Team> team = teamRepository.findById(id);
+		Optional<Team> team = teamRepository.findById(id);
         if (team.isEmpty()) {
-            throw new NotFoundException("A team with the provided id does not exist.");
+			throw new NotFoundException("A team with the provided id does not exist.");
         }
         return team.get();
     }
 	
+	private Project findProject(Long id) {
+		Optional<Project> project = projectRepository.findById(id);
+        if (project.isEmpty()) {
+			throw new NotFoundException("A project with the provided id does not exist.");
+        }
+        return project.get();
+    }
+
+	private Announcement findAnnouncement(Long id) {
+		Optional<Announcement> announcement = announcementRepository.findById(id);
+        if (announcement.isEmpty()) {
+			throw new NotFoundException("An announcement with the provided id does not exist.");
+        }
+        return announcement.get();
+    }
+	
+	
 	@Override
-	public Set<FullUserDto> getAllUsers(Long id) {
+	public Set<FullUserDto> getAllActiveUsers(Long id) {
 		Company company = findCompany(id);
 		Set<User> filteredUsers = new HashSet<>();
 		company.getEmployees().forEach(filteredUsers::add);
@@ -67,6 +92,14 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
+	public Set<FullUserDto> getAllTotalUsers(Long id) {
+		Company company = findCompany(id);
+		Set<User> filteredUsers = new HashSet<>();
+		company.getEmployees().forEach(filteredUsers::add);
+		return fullUserMapper.entitiesToFullUserDtos(filteredUsers);
+	}
+	
+	@Override
 	public Set<AnnouncementDto> getAllAnnouncements(Long id) {
 		Company company = findCompany(id);
 		List<Announcement> sortedList = new ArrayList<Announcement>(company.getAnnouncements());
@@ -74,13 +107,13 @@ public class CompanyServiceImpl implements CompanyService {
 		Set<Announcement> sortedSet = new HashSet<Announcement>(sortedList);
 		return announcementMapper.entitiesToDtos(sortedSet);
 	}
-
+	
 	@Override
 	public Set<TeamDto> getAllTeams(Long id) {
 		Company company = findCompany(id);
 		return teamMapper.entitiesToDtos(company.getTeams());
 	}
-
+	
 	@Override
 	public Set<ProjectDto> getAllProjects(Long companyId, Long teamId) {
 		Company company = findCompany(companyId);
@@ -90,8 +123,170 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		Set<Project> filteredProjects = new HashSet<>();
 		team.getProjects().forEach(filteredProjects::add);
-		filteredProjects.removeIf(project -> !project.isActive());
+		filteredProjects.removeIf(project -> !project.getActive());
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
+	
+	@Override
+    public AnnouncementDto createAnnouncement(AnnouncementDto announcementDto) {
+        if (announcementDto.getAuthor() == null) {
+			throw new NotAuthorizedException("Badd credentials");
+        }
+        if (announcementDto.getMessage().isEmpty()) {
+			throw new BadRequestException("Noo message");
+        }
+        Announcement a = announcementMapper.dtoToEntity(announcementDto);
+        User u = new User();
+        u.setId(a.getAuthor().getId());
+        u.setProfile(a.getAuthor().getProfile());
+        u.setAdmin(a.getAuthor().isAdmin());
+        u.setActive(a.getAuthor().isActive());
+        u.setStatus(a.getAuthor().getStatus());
+        a.setAuthor(u);
+        a.setMessage(announcementDto.getMessage());
+        a.setTitle(announcementDto.getTitle());
+        //TODO in case we need to affix title
+        return announcementMapper.entityToDto(announcementRepository.saveAndFlush(a));
+	}
+
+	// ////////////////////////////////////////
+	
+	// @Override
+	// public Set<CompanyDto> getAllCompanies() {
+	// 	Set<Company> listOfCompanies = new HashSet<>(companyRepository.findAll());
+	// 	return companyMapper.entitiesToDtos(listOfCompanies);
+	// }
+	
+	// @Override
+	// public CompanyDto getCompanyById(Long companyId) {
+	// 	return companyMapper.entityToDto(companyRepository.saveAndFlush(findCompany(companyId)));
+	// }
+	
+	// @Override
+	// public CompanyDto updateCompany(Long companyId, CompanyDto companyDto) {
+	// 	Company company = findCompany(companyId);
+	// 	Company updatesToCompany = companyMapper.dtoToEntity(companyDto);
+	// 	if (updatesToCompany.getName() != null) {
+	// 		company.setName(updatesToCompany.getName());
+	// 	}
+	// 	if (updatesToCompany.getDescription() != null) {
+	// 		company.setDescription(updatesToCompany.getDescription());
+	// 	}
+	// 	return companyMapper.entityToDto(companyRepository.saveAndFlush(company));
+	// }
+	
+	// @Override
+	// public CompanyDto deleteCompany(Long companyId) {
+	// 	Company company = findCompany(companyId);
+	// 	for (Team t : company.getTeams()) {
+	// 		for (Project p : t.getProjects()) {
+	// 			p.setDeleted(true);
+	// 		}
+	// 		projectRepository.saveAllAndFlush(t.getProjects());
+	// 		t.setDeleted(true);
+	// 	}
+	// 	teamRepository.saveAllAndFlush(company.getTeams());
+	// 	return companyMapper.entityToDto(companyRepository.saveAndFlush(company));
+	// }
+	
+	// @Override
+	// public CompanyDto createCompany(CompanyDto companyDto) {
+	// 	Company company = companyMapper.dtoToEntity(companyDto);
+	// 	return companyMapper.entityToDto(companyRepository.saveAndFlush(company));
+	// }
+
+	// ///////////////////////////////////////////
+	
+	// @Override
+	// public AnnouncementDto getAnnouncementById(Long companyId, Long announcementId) {
+	// 	findCompany(companyId);
+	// 	return announcementMapper.entityToDto(announcementRepository.saveAndFlush(findAnnouncement(announcementId)));
+	// }
+	
+	// @Override
+	// public AnnouncementDto updateAnnouncement(Long companyId, Long announcementId, AnnouncementDto announcementDto) {
+	// 	findCompany(companyId);
+	// 	Announcement announcement = findAnnouncement(announcementId);
+	// 	Announcement updatesToAnnouncement = announcementMapper.dtoToEntity(announcementDto);
+	// 	if (updatesToAnnouncement.getTitle() != null) {
+	// 		announcement.setTitle(updatesToAnnouncement.getTitle());
+	// 	}
+	// 	if (updatesToAnnouncement.getMessage() != null) {
+	// 		announcement.setMessage(updatesToAnnouncement.getMessage());
+	// 	}
+	// 	return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announcement));
+		
+	// }
+	
+	// @Override
+	// public AnnouncementDto deleteAnnouncement(Long companyId, Long announcementId) {
+	// 	findCompany(companyId);
+	// 	Announcement announcement = findAnnouncement(announcementId);
+	// 	announcement.setDeleted(true);
+	// 	return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announcement));
+	// }
+
+	// //////////////////////////////////
+	
+	// @Override
+	// public TeamDto updateTeam(Long companyId, Long teamId, TeamDto teamDto) {
+	// 	Team team = findTeam(teamId);
+	// 	Team updatesToTeam = teamMapper.dtoToEntity(teamDto);
+	// 	if (updatesToTeam.getName() != null) {
+	// 		team.setName(teamDto.getName());
+	// 	}
+	// 	if (updatesToTeam.getDescription() != null) {
+	// 		team.setDescription(teamDto.getDescription());
+	// 	}
+	// 	// if (updatesToTeam.getTeammates() != null) {
+	// 	// 	team.setTeammates(teamDto.getTeammates());
+	// 	// } entity mismatch user/basicuser
+	// 	return teamMapper.entityToDto(teamRepository.saveAndFlush(team));
+	// }
+	
+	// @Override
+	// public TeamDto deleteTeam(Long companyId, Long teamId) {
+	// 	findCompany(companyId);
+	// 	Team team = findTeam(teamId);
+	// 	for (Project p : team.getProjects()) {
+	// 		p.setDeleted(true);
+	// 	}
+	// 	projectRepository.saveAllAndFlush(team.getProjects());
+	// 	team.setDeleted(true);
+	// 	return teamMapper.entityToDto(teamRepository.saveAndFlush(team));
+	// }
+
+	// /////////////////////////////////////////
+
+	// @Override
+	// public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto) {
+	// 	findCompany(companyId);
+	// 	findTeam(teamId);
+	// 	Project project = findProject(projectId);
+	// 	Project updatesForProject = projectMapper.dtoToEntity(projectDto);
+	// 	if (updatesForProject.getName() != null) {
+	// 		project.setName(projectDto.getName());
+	// 	}
+	// 	if (updatesForProject.getDescription() != null) {
+	// 		project.setDescription(projectDto.getDescription());
+	// 	}
+	// 	if (updatesForProject.getActive() != null) {
+	// 		project.setActive(projectDto.isActive());
+	// 	}
+	// 	//TODO active was changed to an object along with the project entity to check if it's passed in
+	// 	if (updatesForProject.getTeam() != null) {
+	// 		project.setTeam(teamMapper.dtoToEntity(projectDto.getTeam()));
+	// 	}
+	// 	return projectMapper.entityToDto(projectRepository.saveAndFlush(project));		
+	// }
+	
+	// @Override
+	// public ProjectDto deleteProject(Long companyId, Long teamId, Long projectId) {
+	// 	findCompany(companyId);
+	// 	findTeam(teamId);
+	// 	Project project = findProject(projectId);
+	// 	project.setDeleted(true);
+	// 	return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
+	// }
 
 }
