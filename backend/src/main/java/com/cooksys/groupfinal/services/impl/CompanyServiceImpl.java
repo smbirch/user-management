@@ -312,7 +312,6 @@ public class CompanyServiceImpl implements CompanyService {
 		findTeam(teamId);
 		Project project = findProject(projectId);
 		return projectMapper.entityToDto(project);
-
 	}
 
 	@Override
@@ -328,7 +327,6 @@ public class CompanyServiceImpl implements CompanyService {
 		project.setActive(projectDto.isActive());
 
 		return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
-
 	}
 
 	@Override

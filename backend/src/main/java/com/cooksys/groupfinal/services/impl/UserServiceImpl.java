@@ -1,5 +1,5 @@
 package com.cooksys.groupfinal.services.impl;
-
+import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
@@ -21,9 +21,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-	
-	private final UserRepository userRepository;
-  private final FullUserMapper fullUserMapper;
+    private final UserRepository userRepository;
+    private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
 	
 	private User findUser(String username) {
@@ -32,6 +31,12 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("The username provided does not belong to an active user.");
         }
         return user.get();
+    }
+
+    private void validateRole(BasicUserDto basicUserDto) {
+        if (!basicUserDto.isAdmin()) {
+            throw new NotAuthorizedException("user not authorized");
+        }
     }
 	
 	@Override
@@ -53,7 +58,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public FullUserDto createUser(UserRequestDto userRequestDto) {
+    public FullUserDto createUser(UserRequestDto userRequestDto, BasicUserDto basicUserDto) {
+        validateRole(basicUserDto);
+
         User u = findUser(userRequestDto.getCredentials().getUsername());
         u.setActive(true);
         u.setAdmin(userRequestDto.isAdmin());
