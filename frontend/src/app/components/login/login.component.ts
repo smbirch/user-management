@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CredentialsDto, UserServiceService} from "../../../services/user-service.service";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,7 @@ export class LoginComponent {
 
   credentials: CredentialsDto = {username: '', password: ''};
 
-  constructor(private userService: UserServiceService) {
+  constructor(private userService: UserServiceService, private router: Router) {
   }
 
 
@@ -25,5 +27,10 @@ export class LoginComponent {
         console.error('Login failed', error);
       }
     );
+
+  goToCompanies(){
+    this.router.navigateByUrl('/companies');
+  
+
   }
 }
