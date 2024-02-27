@@ -53,7 +53,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public FullUserDto createUser(UserRequestDto userRequestDto) {
-        return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(findUser(userRequestDto.getCredentials().getUsername())));
+        User u = findUser(userRequestDto.getCredentials().getUsername());
+        u.setActive(true);
+        return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(u));
     }
 
 }
