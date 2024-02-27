@@ -25,11 +25,11 @@ public class User {
 	@GeneratedValue
 	private Long id;
 
-  @Embedded
-  private Credentials credentials;
-	
-  @Embedded
-  private Profile profile;
+	@Embedded
+	private Credentials credentials;
+		
+	@Embedded
+	private Profile profile;
 	
 	private boolean active;
 	

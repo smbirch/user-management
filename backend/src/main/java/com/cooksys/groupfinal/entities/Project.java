@@ -21,7 +21,9 @@ public class Project {
 	
 	private String description;
 	
-	private boolean active;
+	private Boolean active;
+
+	private boolean deleted = false;
 	
 	@ManyToOne
 	private Team team;
