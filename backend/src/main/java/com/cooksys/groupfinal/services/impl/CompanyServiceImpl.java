@@ -131,5 +131,18 @@ public class CompanyServiceImpl implements CompanyService {
 
 	}
 
+	@Override
+	public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto) {
+		findCompany(companyId);
+		findTeam(teamId);
+
+		Project project = findProject(projectId);
+
+		project.setName(projectDto.getName());
+		project.setDescription(projectDto.getDescription());
+
+		return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
+	}
+
 
 }

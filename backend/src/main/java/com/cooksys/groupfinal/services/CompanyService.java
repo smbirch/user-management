@@ -22,4 +22,6 @@ public interface CompanyService {
 	ProjectDto getProject(Long companyId, Long teamId, Long projectId);
 
 	ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto);
+
+	ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto);
 }

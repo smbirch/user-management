@@ -53,6 +53,11 @@ public class CompanyController {
         return companyService.createProject(companyId, teamId, projectDto);
     }
 
+    @PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
+    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectDto projectDto) {
+        return companyService.updateProject(companyId, teamId, projectId, projectDto);
+    }
+
 
 
 }
