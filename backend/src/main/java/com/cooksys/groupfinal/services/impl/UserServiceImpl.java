@@ -1,9 +1,5 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
@@ -16,8 +12,10 @@ import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,15 +50,10 @@ public class UserServiceImpl implements UserService {
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
 
+
     @Override
     public FullUserDto createUser(UserRequestDto userRequestDto) {
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(findUser(userRequestDto.getCredentials().getUsername())));
     }
-	
-	
-	
-	
-	
-	
 
 }

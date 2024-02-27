@@ -1,7 +1,6 @@
 package com.cooksys.groupfinal.controllers;
 
 import java.util.Set;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -10,15 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.CompanyDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.services.CompanyService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/company")
@@ -52,8 +52,14 @@ public class CompanyController {
     public Set<TeamDto> getAllTeams(@PathVariable Long companyId) {
         return companyService.getAllTeams(companyId);
     }
+
+    @PostMapping("/{id}/teams")
+    public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto) {
+        return companyService.createTeam(companyId, teamDto);
+
+    }
 	
-	@GetMapping("/{companyId}/teams/{teamId}/projects") 
+	@GetMapping("/{companyId}/teams/{teamId}/projects")
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
         return companyService.getAllProjects(companyId, teamId);
 	}
@@ -125,5 +131,22 @@ public class CompanyController {
     // public ProjectDto deleteProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId) {
     //     return companyService.deleteProject(companyId, teamId, projectId);
     // }
+
+    @GetMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
+    public ProjectDto getProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId) {
+        return companyService.getProject(companyId, teamId, projectId);
+    }
+
+    @PostMapping("/{companyId}/teams/{teamId}/projects")
+    public ProjectDto createProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectDto projectDto) {
+        return companyService.createProject(companyId, teamId, projectDto);
+    }
+
+    @PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
+    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectDto projectDto) {
+        return companyService.updateProject(companyId, teamId, projectId, projectDto);
+    }
+
+
 
 }

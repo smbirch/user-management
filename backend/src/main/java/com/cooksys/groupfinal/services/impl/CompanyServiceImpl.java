@@ -1,5 +1,9 @@
 package com.cooksys.groupfinal.services.impl;
 
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.entities.*;
+import com.cooksys.groupfinal.exceptions.NotFoundException;
+import com.cooksys.groupfinal.mappers.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -32,8 +36,10 @@ import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +47,10 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
 	private final TeamRepository teamRepository;
+
+	private final ProjectRepository projectRepository;
 	private final FullUserMapper fullUserMapper;
+	private final BasicUserMapper basicUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
@@ -64,6 +73,14 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return team.get();
     }
+
+	private Project findProject(Long id) {
+		Optional<Project> project = projectRepository.findById(id);
+		if (project.isEmpty()) {
+			throw new NotFoundException("A project with the provided id does not exist.");
+		}
+		return project.get();
+	}
 	
 	private Project findProject(Long id) {
 		Optional<Project> project = projectRepository.findById(id);
@@ -107,13 +124,31 @@ public class CompanyServiceImpl implements CompanyService {
 		Set<Announcement> sortedSet = new HashSet<Announcement>(sortedList);
 		return announcementMapper.entitiesToDtos(sortedSet);
 	}
-	
+
 	@Override
 	public Set<TeamDto> getAllTeams(Long id) {
 		Company company = findCompany(id);
 		return teamMapper.entitiesToDtos(company.getTeams());
 	}
 	
+	@Override
+	public TeamDto createTeam(Long companyId, TeamDto teamDto) {
+
+		Company company = findCompany(companyId);
+		Team team = new Team();
+
+		team.setCompany(company);
+		team.setName(teamDto.getName());
+		team.setDescription(teamDto.getDescription());
+
+		Set<BasicUserDto> users = new HashSet<>();
+		users.addAll(teamDto.getTeammates());
+		team.setTeammates(basicUserMapper.requestDtosToEntities(teamDto.getTeammates()));
+
+		return teamMapper.entityToDto(teamRepository.saveAndFlush(team));
+	}
+
+
 	@Override
 	public Set<ProjectDto> getAllProjects(Long companyId, Long teamId) {
 		Company company = findCompany(companyId);
@@ -288,5 +323,43 @@ public class CompanyServiceImpl implements CompanyService {
 	// 	project.setDeleted(true);
 	// 	return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
 	// }
+
+	@Override
+	public ProjectDto getProject(Long companyId, Long teamId, Long projectId) {
+		findCompany(companyId);
+		findTeam(teamId);
+		Project project = findProject(projectId);
+		return projectMapper.entityToDto(project);
+
+	}
+
+	@Override
+	public ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto) {
+		findCompany(companyId);
+		Team team = findTeam(teamId);
+		Project project = new Project();
+
+		project.setName(projectDto.getName());
+		project.setDescription(projectDto.getDescription());
+		project.setTeam(team);
+		project.setActive(projectDto.isActive());
+
+		return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
+
+	}
+
+	@Override
+	public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto) {
+		findCompany(companyId);
+		findTeam(teamId);
+
+		Project project = findProject(projectId);
+
+		project.setName(projectDto.getName());
+		project.setDescription(projectDto.getDescription());
+
+		return projectMapper.entityToDto(projectRepository.saveAndFlush(project));
+	}
+
 
 }
