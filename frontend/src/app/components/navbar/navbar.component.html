@@ -1,1 +1,18 @@
-<p>navbar works!</p>
+<div class="menu-bar" [class.open]="showModal">
+  <div class="menu-item">
+    <p>Acting as Admin placeholder</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="menu-item hamburger-menu" (click)="toggleModal()">
+    <div class="hamburger"></div>
+    <div class="hamburger"></div>
+    <div class="hamburger"></div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="showModal">
+  <a class="modal-link" routerLink="/home">Home</a>
+  <a class="modal-link" routerLink="/teams">Teams</a>
+  <a class="modal-link" routerLink="/users-registry">Users Registry</a>
+  <a class="modal-link" (click)="logout()">Logout</a>
+</div>
