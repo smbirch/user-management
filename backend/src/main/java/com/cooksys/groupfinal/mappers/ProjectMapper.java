@@ -13,6 +13,6 @@ public interface ProjectMapper {
 
     Set<ProjectDto> entitiesToDtos(Set<Project> projects);
 
-    Project DtoToEntity (ProjectDto projectDto);
+    Project dtoToEntity(ProjectDto projectDto);
 
 }

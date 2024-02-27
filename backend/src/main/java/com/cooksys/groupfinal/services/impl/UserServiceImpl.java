@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Credentials;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
@@ -48,5 +49,11 @@ public class UserServiceImpl implements UserService {
         }
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
+
+
+    @Override
+    public FullUserDto createUser(UserRequestDto userRequestDto) {
+        return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(findUser(userRequestDto.getCredentials().getUsername())));
+    }
 
 }

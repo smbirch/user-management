@@ -25,6 +25,8 @@ public class Company {
 	private String name;
 	
 	private String description;
+
+	private boolean deleted = false;
 	
 	@OneToMany(mappedBy = "company")
 	@EqualsAndHashCode.Exclude
