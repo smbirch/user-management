@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public FullUserDto createUser(UserRequestDto userRequestDto) {
-        User u = findUser(userRequestDto.getCredentials().getUsername());
+        User u = fullUserMapper.requestDtoToEntity(userRequestDto);
         u.setActive(true);
         u.setAdmin(userRequestDto.isAdmin());
         Credentials c = new Credentials();
