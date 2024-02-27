@@ -2,35 +2,10 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.entities.*;
-import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.CompanyDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
-import com.cooksys.groupfinal.entities.Announcement;
-import com.cooksys.groupfinal.entities.Company;
-import com.cooksys.groupfinal.entities.Project;
-import com.cooksys.groupfinal.entities.Team;
-import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.AnnouncementMapper;
-import com.cooksys.groupfinal.mappers.CompanyMapper;
-import com.cooksys.groupfinal.mappers.ProjectMapper;
-import com.cooksys.groupfinal.mappers.TeamMapper;
-import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.mappers.*;
 import com.cooksys.groupfinal.repositories.AnnouncementRepository;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.ProjectRepository;
@@ -55,7 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
 	private final AnnouncementRepository announcementRepository;
-	private final ProjectRepository projectRepository;
+
 	private final CompanyMapper companyMapper;
 	
 	private Company findCompany(Long id) {
@@ -76,14 +51,6 @@ public class CompanyServiceImpl implements CompanyService {
 
 	private Project findProject(Long id) {
 		Optional<Project> project = projectRepository.findById(id);
-		if (project.isEmpty()) {
-			throw new NotFoundException("A project with the provided id does not exist.");
-		}
-		return project.get();
-	}
-	
-	private Project findProject(Long id) {
-		Optional<Project> project = projectRepository.findById(id);
         if (project.isEmpty()) {
 			throw new NotFoundException("A project with the provided id does not exist.");
         }
@@ -97,6 +64,12 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return announcement.get();
     }
+
+	private void validateRole(BasicUserDto basicUserDto) {
+		if (!basicUserDto.isAdmin()) {
+			throw new NotAuthorizedException("user not authorized");
+		}
+	}
 	
 	
 	@Override
@@ -132,11 +105,12 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	@Override
-	public TeamDto createTeam(Long companyId, TeamDto teamDto) {
+	public TeamDto createTeam(Long companyId, TeamDto teamDto, BasicUserDto basicUserDto) {
 
 		Company company = findCompany(companyId);
-		Team team = new Team();
+		validateRole(basicUserDto);
 
+		Team team = new Team();
 		team.setCompany(company);
 		team.setName(teamDto.getName());
 		team.setDescription(teamDto.getDescription());
@@ -163,7 +137,10 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	@Override
-    public AnnouncementDto createAnnouncement(AnnouncementDto announcementDto) {
+    public AnnouncementDto createAnnouncement(Long companyId, AnnouncementDto announcementDto, BasicUserDto basicUserDto) {
+		findCompany(companyId);
+		validateRole(basicUserDto);
+
         if (announcementDto.getAuthor() == null) {
 			throw new NotAuthorizedException("Badd credentials");
         }
@@ -334,7 +311,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto) {
+	public ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto, BasicUserDto basicUserDto) {
+		validateRole(basicUserDto);
 		findCompany(companyId);
 		Team team = findTeam(teamId);
 		Project project = new Project();
@@ -349,7 +327,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto) {
+	public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto, BasicUserDto basicUserDto) {
+		validateRole(basicUserDto);
 		findCompany(companyId);
 		findTeam(teamId);
 
