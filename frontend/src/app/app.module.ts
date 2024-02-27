@@ -7,7 +7,6 @@ import { LoginComponent } from './components/login/login.component';
 
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { CompanyComponent } from './components/company/company.component';
 import { HomeComponent } from './components/home/home.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { ProjectsComponent } from './components/projects/projects.component';
@@ -26,7 +25,7 @@ import { LinkButtonComponent } from './components/link-button/link-button.compon
   declarations: [
     AppComponent,
     LoginComponent,
-    CompanyComponent,
+    CompaniesComponent,
     HomeComponent,
     TeamsComponent,
     ProjectsComponent,
