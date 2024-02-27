@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CredentialsDto, UserServiceService} from "../../services/user-service.service";
+import {CredentialsDto, UserServiceService} from "../../../services/user-service.service";
 
 @Component({
   selector: 'app-login',

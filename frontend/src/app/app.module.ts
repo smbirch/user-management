@@ -3,20 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { CompanyComponent } from './company/company.component';
-import { HomeComponent } from './home/home.component';
-import { TeamsComponent } from './teams/teams.component';
-import { ProjectsComponent } from './projects/projects.component';
-import { UsersRegistryComponent } from './users-registry/users-registry.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CreateProjectModalComponent } from './create-project-modal/create-project-modal.component';
-import { CreateTeamModalComponent } from './create-team-modal/create-team-modal.component';
-import { CreateAnnouncementModalComponent } from './create-announcement-modal/create-announcement-modal.component';
-import { EditProjectModalComponent } from './edit-project-modal/edit-project-modal.component';
-import { AddUserModalComponent } from './add-user-modal/add-user-modal.component';
+import { CompanyComponent } from './components/company/company.component';
+import { HomeComponent } from './components/home/home.component';
+import { TeamsComponent } from './components/teams/teams.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { UsersRegistryComponent } from './components/users-registry/users-registry.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CreateProjectModalComponent } from './components/create-project-modal/create-project-modal.component';
+import { CreateTeamModalComponent } from './components/create-team-modal/create-team-modal.component';
+import { CreateAnnouncementModalComponent } from './components/create-announcement-modal/create-announcement-modal.component';
+import { EditProjectModalComponent } from './components/edit-project-modal/edit-project-modal.component';
+import { AddUserModalComponent } from './components/add-user-modal/add-user-modal.component';
 
 @NgModule({
   declarations: [
