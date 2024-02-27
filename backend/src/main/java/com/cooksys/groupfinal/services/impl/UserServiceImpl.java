@@ -4,6 +4,7 @@ import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Credentials;
+import com.cooksys.groupfinal.entities.Profile;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
@@ -55,6 +56,17 @@ public class UserServiceImpl implements UserService {
     public FullUserDto createUser(UserRequestDto userRequestDto) {
         User u = findUser(userRequestDto.getCredentials().getUsername());
         u.setActive(true);
+        u.setAdmin(userRequestDto.isAdmin());
+        Credentials c = new Credentials();
+        c.setUsername(userRequestDto.getCredentials().getUsername());
+        c.setPassword(userRequestDto.getCredentials().getPassword());
+        u.setCredentials(c);
+        Profile p = new Profile();
+        p.setEmail(userRequestDto.getProfile().getEmail());
+        p.setFirstName(userRequestDto.getProfile().getFirstName());
+        p.setLastName(userRequestDto.getProfile().getLastName());
+        p.setPhone(userRequestDto.getProfile().getPhone());
+        u.setProfile(p);
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(u));
     }
 
