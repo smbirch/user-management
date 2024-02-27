@@ -36,7 +36,7 @@ import { LinkButtonComponent } from './components/link-button/link-button.compon
     CreateTeamModalComponent,
     CreateAnnouncementModalComponent,
     EditProjectModalComponent,
-    AddUserModalComponent
+    AddUserModalComponent,
     CompaniesComponent,
     LinkButtonComponent
 
