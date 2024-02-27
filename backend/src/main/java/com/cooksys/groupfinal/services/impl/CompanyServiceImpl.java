@@ -250,6 +250,11 @@ public class CompanyServiceImpl implements CompanyService {
 	// 	if (updatesToTeam.getDescription() != null) {
 	// 		team.setDescription(teamDto.getDescription());
 	// 	}
+
+//		Set<BasicUserDto> users = new HashSet<>();
+//		users.addAll(teamDto.getTeammates());
+//		team.setTeammates(basicUserMapper.requestDtosToEntities(teamDto.getTeammates()));
+
 	// 	// if (updatesToTeam.getTeammates() != null) {
 	// 	// 	team.setTeammates(teamDto.getTeammates());
 	// 	// } entity mismatch user/basicuser
