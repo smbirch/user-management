@@ -14,7 +14,7 @@ export class UserServiceService {
     this.usersUrl = 'http://localhost:8080/users';
    }
 
-   
+
    public findAll(): Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl);
    }
@@ -23,5 +23,13 @@ export class UserServiceService {
     return this.http.post<User>(this.usersUrl, user);
    }
 
+    public login(credentials: CredentialsDto): Observable<User> {
+        return this.http.post<User>(`${this.usersUrl}/login`, credentials);
+    }
+
    //probably need to implement some error handling.
+}
+export class CredentialsDto {
+    username: string | undefined;
+    password: string | undefined;
 }
