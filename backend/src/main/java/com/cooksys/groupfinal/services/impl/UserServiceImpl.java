@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.services.impl;
 
+import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
@@ -33,7 +34,13 @@ public class UserServiceImpl implements UserService {
         }
         return user.get();
     }
-	
+
+    private void validateRole(BasicUserDto basicUserDto) {
+        if (!basicUserDto.isAdmin()) {
+            throw new NotAuthorizedException("user not authorized");
+        }
+    }
+
 	@Override
 	public FullUserDto login(CredentialsDto credentialsDto) {
 		if (credentialsDto == null || credentialsDto.getUsername() == null || credentialsDto.getPassword() == null) {
@@ -53,7 +60,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public FullUserDto createUser(UserRequestDto userRequestDto) {
+    public FullUserDto createUser(UserRequestDto userRequestDto, BasicUserDto basicUserDto) {
+
+        validateRole(basicUserDto);
+
         User u = fullUserMapper.requestDtoToEntity(userRequestDto);
         u.setActive(true);
         u.setAdmin(userRequestDto.isAdmin());

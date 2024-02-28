@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.controllers;
 
+import com.cooksys.groupfinal.dtos.BasicUserDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping
-    public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.createUser(userRequestDto);
+    public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto, BasicUserDto basicUserDto) {
+        return userService.createUser(userRequestDto, basicUserDto);
     }
 
 }
