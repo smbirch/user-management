@@ -15,17 +15,21 @@ export class LoginComponent {
     constructor(private userService: UserServiceService, private router: Router) {
     }
 
-
     login() {
         this.userService.login(this.credentials).subscribe(
             (user) => {
-                console.log('Login successful', user);
-                // route to next page
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('isLoggedIn', 'true');
+                console.log(user.admin)
+                if (user.admin === true) {
+                    this.router.navigate(['/companies']);
+                } else {
+                    this.router.navigate(['/home']);
+                }
+
             },
             (error) => {
-                console.error('Login failed', error);
-                localStorage.setItem('isLoggedIn', 'true');
-
+                console.error('Login failed: ', error);
             }
         );
     }
