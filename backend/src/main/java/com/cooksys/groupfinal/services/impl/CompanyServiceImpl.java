@@ -149,6 +149,7 @@ public class CompanyServiceImpl implements CompanyService {
         }
         Announcement a = announcementMapper.dtoToEntity(announcementDto);
         User u = new User();
+		a.setCompany(findCompany(companyId));
         u.setId(a.getAuthor().getId());
         u.setProfile(a.getAuthor().getProfile());
         u.setAdmin(a.getAuthor().isAdmin());
