@@ -20,10 +20,9 @@ export class NavbarComponent {
   }
 
   isAdmin(): boolean {
-    // Retrieve user information from local storage
     // @ts-ignore
     const user = JSON.parse(localStorage.getItem('currentUser'));
-    // Check if the user is an admin
+    // Check if admin
     return user && user.admin;
   }
 
