@@ -19,10 +19,17 @@ export class NavbarComponent {
     this.showModal = !this.showModal;
   }
 
-  logout() {
-    this.toggleModal();
-    localStorage.setItem('isLoggedIn', 'false');
-    this.router.navigate(['/login']);
+  isAdmin(): boolean {
+    // @ts-ignore
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    // Check if admin
+    return user && user.admin;
   }
 
+
+  logout() {
+    this.toggleModal();
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }

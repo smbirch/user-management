@@ -9,18 +9,31 @@ import { Announcement } from 'src/models/announcement';
   providedIn: 'root'
 })
 export class AnnouncementService {
+  private announcementsUrl = 'http://localhost:8080/company';
 
-  private announcementsUrl: string;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-    this.announcementsUrl = 'our url';
-   }
+  public findAll(): Observable<Announcement[]> {
+    // Parse the companies object from local storage
+    const companiesString = localStorage.getItem('selectedCompany');
+    if (!companiesString) {
+      throw new Error('Companies data not found in local storage.');
+      // Handle the case where companies data is not found
+    }
+    const companies = JSON.parse(companiesString);
 
-   public findAll(){
-    return this.http.get<Announcement[]>(this.announcementsUrl);
-   }
+    const companyId = companies.id;
 
-   public saveAnnouncement(announcement:Announcement) {
-    return this.http.post<Announcement>(this.announcementsUrl,announcement);
-   }
+    if (!companyId) {
+      throw new Error('Company ID not found in companies data.');
+    //   TODO: redirect user to selection page and try again
+    }
+
+    const url = `${this.announcementsUrl}/${companyId}/announcements`;
+    return this.http.get<Announcement[]>(url);
+  }
+
+  public saveAnnouncement(announcement: Announcement): Observable<Announcement> {
+    return this.http.post<Announcement>(this.announcementsUrl, announcement);
+  }
 }

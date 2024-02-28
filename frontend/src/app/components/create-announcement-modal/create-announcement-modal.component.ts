@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-create-announcement-modal',
@@ -6,5 +6,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./create-announcement-modal.component.css']
 })
 export class CreateAnnouncementModalComponent {
+  @Input() showModal: boolean = false;
+  @Input() authorName: string = '';
+  announcementText: string = '';
 
+
+  closeModal() {
+    this.showModal = false;
+    this.announcementText = '';
+  }
+
+  openModal(): boolean {
+    return this.showModal = false;
+  }
+
+  submitAnnouncement() {
+
+    console.log('Submitted Announcement:', this.announcementText);
+    this.closeModal();
+  }
 }

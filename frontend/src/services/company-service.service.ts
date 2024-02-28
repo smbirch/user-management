@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Company} from "../models/company";
-import { Timestamp } from "rxjs";
+import {Observable, of, Timestamp} from "rxjs";
 
 
 @Injectable({
@@ -13,8 +13,15 @@ export class CompanyServiceService {
 
   constructor(private http: HttpClient) { }
 
-
-  getCompanies() {
-    return this.http.get<Company[]>(`{this.companyUrl}/all`);
+  getCompanies(): Observable<Company[]> {
+    // User must be logged in to see this page
+    // gets companies from local storage saved during login
+    const companiesString = localStorage.getItem('companies');
+    if (companiesString) {
+      const companies: Company[] = JSON.parse(companiesString);
+      return of(companies); // Return companies
+    } else {
+      return of([]); // return nothing if nothing is found
+    }
   }
 }

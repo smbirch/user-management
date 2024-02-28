@@ -16,7 +16,7 @@ export class CompaniesComponent implements OnInit {
   constructor(private router: Router, private companyService: CompanyServiceService) {}
 
   ngOnInit(): void {
-    this.loadCompanies(); // loads companies
+    this.loadCompanies();
   }
 
   loadCompanies() {
@@ -30,8 +30,19 @@ export class CompaniesComponent implements OnInit {
     );
   }
 
-
   goHome(){
     this.router.navigateByUrl('/home');
+  }
+
+  onCompanySelect($event: Event) {
+    // @ts-ignore
+    const selectedCompanyId = event.target.value;
+    // Find the company from the companies array
+    const selectedCompany = this.companies.find(company => company.id === parseInt(selectedCompanyId));
+    if (selectedCompany) {
+      // Store the company in local storage
+      localStorage.setItem('selectedCompany', JSON.stringify(selectedCompany));
+      this.goHome()
+    }
   }
 }

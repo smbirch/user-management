@@ -34,7 +34,7 @@ button {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  background-color: #007bff; /* Blue button */
+  background-color: #3d5169;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -42,5 +42,5 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #d3d3d3;
 }
