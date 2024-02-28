@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CredentialsDto, UserServiceService} from "../../../services/user-service.service";
 import {Router} from '@angular/router';
+import {Company} from "../../../models/company";
+import {Team} from "../../../models/team";
+import {User} from "../../../models/user";
 
 
 @Component({
@@ -17,16 +20,32 @@ export class LoginComponent {
 
     login() {
         this.userService.login(this.credentials).subscribe(
-            (user) => {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('isLoggedIn', 'true');
-                console.log(user.admin)
-                if (user.admin === true) {
+            (user: User) => {
+                // Save user info to local storage
+                localStorage.setItem('currentUser', JSON.stringify({
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    active: user.active,
+                    status: user.status,
+                    admin: user.admin,
+                    isLoggedIn: true
+                }));
+
+                // Extract companies and teams data
+                const companies: Company[] | undefined = user.companies;
+                const teams: Team[] | undefined = user.teams;
+
+                // Save companies and teams data to local storage separately
+                localStorage.setItem('companies', JSON.stringify(companies));
+                localStorage.setItem('teams', JSON.stringify(teams));
+
+                // Navigate based on user role
+                if (user.admin) {
                     this.router.navigate(['/companies']);
                 } else {
                     this.router.navigate(['/home']);
                 }
-
             },
             (error) => {
                 console.error('Login failed: ', error);
