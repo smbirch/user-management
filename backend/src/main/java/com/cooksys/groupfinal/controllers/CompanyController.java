@@ -40,7 +40,7 @@ public class CompanyController {
         return companyService.getAllTeams(companyId);
     }
 
-    @PostMapping("/{id}/teams")
+    @PostMapping("/{companyId}/teams")
     public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto) {
         return companyService.createTeam(companyId, teamDto);
 
