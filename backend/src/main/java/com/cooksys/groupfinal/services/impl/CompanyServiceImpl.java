@@ -105,10 +105,10 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	@Override
-	public TeamDto createTeam(Long companyId, TeamDto teamDto, BasicUserDto basicUserDto) {
+	public TeamDto createTeam(Long companyId, TeamDto teamDto) {
 
 		Company company = findCompany(companyId);
-		validateRole(basicUserDto);
+		validateRole(teamDto.getAuthor());
 
 		Team team = new Team();
 		team.setCompany(company);
@@ -137,9 +137,9 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	@Override
-    public AnnouncementDto createAnnouncement(Long companyId, AnnouncementDto announcementDto, BasicUserDto basicUserDto) {
+    public AnnouncementDto createAnnouncement(Long companyId, AnnouncementDto announcementDto) {
 		findCompany(companyId);
-		validateRole(basicUserDto);
+		validateRole(announcementDto.getAuthor());
 
         if (announcementDto.getAuthor() == null) {
 			throw new NotAuthorizedException("Badd credentials");
@@ -315,8 +315,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto, BasicUserDto basicUserDto) {
-		validateRole(basicUserDto);
+	public ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto) {
+		validateRole(projectDto.getAuthor());
 		findCompany(companyId);
 		Team team = findTeam(teamId);
 		Project project = new Project();
@@ -330,8 +330,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto, BasicUserDto basicUserDto) {
-		validateRole(basicUserDto);
+	public ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto) {
+		validateRole(projectDto.getAuthor());
 		findCompany(companyId);
 		findTeam(teamId);
 
