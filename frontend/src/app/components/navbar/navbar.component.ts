@@ -21,7 +21,7 @@ export class NavbarComponent {
 
   logout() {
     this.toggleModal();
-    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 
