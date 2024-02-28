@@ -30,12 +30,6 @@ export class CompaniesComponent implements OnInit {
     );
   }
 
-  navigateToHome(selectedCompanyId: string) {
-    if (selectedCompanyId) {
-      this.router.navigateByUrl('/home');
-    }
-  }
-
   goHome(){
     this.router.navigateByUrl('/home');
   }
@@ -48,7 +42,7 @@ export class CompaniesComponent implements OnInit {
     if (selectedCompany) {
       // Store the company in local storage
       localStorage.setItem('selectedCompany', JSON.stringify(selectedCompany));
-      this.navigateToHome(selectedCompanyId)
+      this.goHome()
     }
   }
 }

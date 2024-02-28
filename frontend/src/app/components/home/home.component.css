@@ -1,0 +1,41 @@
+.home-container {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-announcement-button {
+  width: 10%;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #3d5169;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.announcement {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.announcement-header {
+  font-weight: bold;
+}
+
+.announcement-body {
+  font-size: 14px;
+}

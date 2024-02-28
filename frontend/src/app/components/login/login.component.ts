@@ -21,10 +21,13 @@ export class LoginComponent {
     login() {
         this.userService.login(this.credentials).subscribe(
             (user: User) => {
+                console.log(user)
                 // Save user info to local storage
                 localStorage.setItem('currentUser', JSON.stringify({
                     id: user.id,
                     username: user.username,
+                    firstName: user.profile?.firstName,
+                    lastName: user.profile?.lastName,
                     email: user.email,
                     active: user.active,
                     status: user.status,
