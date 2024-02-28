@@ -27,6 +27,12 @@ export class UserServiceService {
         return this.http.post<User>(`${this.usersUrl}/login`, credentials);
     }
 
+
+public findCompanyActiveUsers(): Observable<User[]> 
+{
+  
+  return this.http.get<User[]>('http://localhost:8080/company/6/active-users');
+}
    //probably need to implement some error handling.
 }
 export class CredentialsDto {

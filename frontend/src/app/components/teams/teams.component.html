@@ -1,1 +1,50 @@
 <p>teams works!</p>
+<div class="teams-container">
+    <div *ngFor="let team of teams" class = "team-item">
+
+        <span class ="team-name-style">{{team.name}}</span>
+        <p>{{team.description}}</p>
+        <span class ="team-numofprojects-style"></span>
+       <div class="test-container">
+        <div *ngFor="let user of team.teammates" class="team-user-container">
+            <p class = "team-user-item">{{user.firstName}} {{user.lastName}}</p>
+        </div>
+       </div>
+
+    </div>
+
+
+    <div>
+      <div>
+        <h1>Add a Team</h1>
+        <div class="button-container">
+                <button (click)="openModal()">
+                    Add a Team
+               </button>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<div>
+  <ww-modal id = "modal-add-team">
+    <h1>Add a Team Modal</h1>
+    <input type="text" placeholder="team name" [(ngModel)]="newTeamName">
+    <input type="text" placeholder="description" [(ngModel)]="newTeamDescription">
+    <h2>Select Users</h2>
+    <select [(ngModel)]="selectedUsers" multiple>
+      <option *ngFor="let user of users" [value]="user">{{ user.firstName }}</option>
+    </select>
+    
+
+    <h2>selected users</h2>
+    <ul>
+      <li *ngFor="let user of selectedUsers" style="text-decoration: none;">{{user.firstName}} {{user.lastName}}</li>
+    </ul>
+    
+    
+    <button (click)="closeModal(); createTeam();" class="button-style">Close</button>
+    <button (click)="clearSelection()">clear selection</button>
+</ww-modal>
+</div>

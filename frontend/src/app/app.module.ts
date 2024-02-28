@@ -19,6 +19,7 @@ import { EditProjectModalComponent } from './components/edit-project-modal/edit-
 import { AddUserModalComponent } from './components/add-user-modal/add-user-modal.component';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { LinkButtonComponent } from './components/link-button/link-button.component';
+import { ModalComponent } from './modals/modal/modal.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { LinkButtonComponent } from './components/link-button/link-button.compon
     EditProjectModalComponent,
     AddUserModalComponent,
     CompaniesComponent,
-    LinkButtonComponent
+    LinkButtonComponent,
+    ModalComponent
 
   ],
   imports: [

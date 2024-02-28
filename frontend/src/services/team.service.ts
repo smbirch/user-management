@@ -10,7 +10,7 @@ export class TeamService {
   private teamsUrl: string;
 
   constructor(private http: HttpClient) {
-    this.teamsUrl = 'http://localhost:8080/team';
+    this.teamsUrl = 'http://localhost:8080/company/6/teams';
    }
 
    public findAll() {
@@ -21,8 +21,16 @@ export class TeamService {
     return this.http.get<Team[]>(`${this.teamsUrl}/${companyId}/team`);
    }
 
-   public saveTeam(team: Team) {
-    return this.http.post<Team>(this.teamsUrl,team);
+   public saveTeam(TeamDto:any,BasicUserDto:any) {
+    console.log('teamdto',TeamDto);
+    console.log('basicUserDto',BasicUserDto);
+    return this.http.post<Team>(this.teamsUrl,TeamDto, BasicUserDto);
    }
+   public getTestTeam(){
+    return this.http.get<Team[]>('http://localhost:8080/company/6/teams');
+    console.log('in test team');
+   }
+
+  
    //probably need to implement some error handling.
 }
