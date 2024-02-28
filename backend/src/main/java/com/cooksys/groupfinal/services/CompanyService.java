@@ -26,6 +26,8 @@ public interface CompanyService {
   
     AnnouncementDto createAnnouncement(Long conpanyId, AnnouncementDto announcementDto);
 
+    TeamDto getTeamById(Long companyId, Long teamId);
+
 //     ///////////////////////////////////
     
 //     Set<CompanyDto> getAllCompanies();
