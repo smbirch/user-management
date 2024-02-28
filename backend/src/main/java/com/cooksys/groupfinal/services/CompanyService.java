@@ -16,15 +16,15 @@ public interface CompanyService {
 
 	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
 
-	TeamDto createTeam(Long companyId, TeamDto teamDto, BasicUserDto basicUserDto);
+	TeamDto createTeam(Long companyId, TeamDto teamDto);
 
 	ProjectDto getProject(Long companyId, Long teamId, Long projectId);
 
-	ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto, BasicUserDto basicUserDto);
+	ProjectDto createProject(Long companyId, Long teamId, ProjectDto projectDto);
 
-	ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto, BasicUserDto basicUserDto);
+	ProjectDto updateProject(Long companyId, Long teamId, Long projectId, ProjectDto projectDto);
   
-    AnnouncementDto createAnnouncement(Long conpanyId, AnnouncementDto announcementDto, BasicUserDto basicUserDto);
+    AnnouncementDto createAnnouncement(Long conpanyId, AnnouncementDto announcementDto);
 
 //     ///////////////////////////////////
     

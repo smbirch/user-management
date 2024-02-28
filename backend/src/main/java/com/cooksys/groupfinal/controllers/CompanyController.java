@@ -31,8 +31,8 @@ public class CompanyController {
     }
 	
     @PostMapping("/{companyId}/announcements")
-    public AnnouncementDto createAnnouncement(@PathVariable Long companyId, @RequestBody AnnouncementDto announcementDto, @RequestBody BasicUserDto basicUserDto) {
-        return companyService.createAnnouncement(companyId, announcementDto, basicUserDto);
+    public AnnouncementDto createAnnouncement(@PathVariable Long companyId, @RequestBody AnnouncementDto announcementDto) {
+        return companyService.createAnnouncement(companyId, announcementDto);
     }
     
 	@GetMapping("/{companyId}/teams")
@@ -41,8 +41,8 @@ public class CompanyController {
     }
 
     @PostMapping("/{id}/teams")
-    public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto, @RequestBody BasicUserDto basicUserDto) {
-        return companyService.createTeam(companyId, teamDto, basicUserDto);
+    public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto) {
+        return companyService.createTeam(companyId, teamDto);
 
     }
 	
@@ -125,13 +125,13 @@ public class CompanyController {
     }
 
     @PostMapping("/{companyId}/teams/{teamId}/projects")
-    public ProjectDto createProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectDto projectDto, BasicUserDto basicUserDto) {
-        return companyService.createProject(companyId, teamId, projectDto, basicUserDto);
+    public ProjectDto createProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectDto projectDto) {
+        return companyService.createProject(companyId, teamId, projectDto);
     }
 
     @PatchMapping("/{companyId}/teams/{teamId}/projects/{projectId}")
-    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectDto projectDto, BasicUserDto basicUserDto) {
-        return companyService.updateProject(companyId, teamId, projectId, projectDto, basicUserDto);
+    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectDto projectDto) {
+        return companyService.updateProject(companyId, teamId, projectId, projectDto);
     }
 
 

@@ -17,4 +17,6 @@ public class ProjectDto {
     
     private TeamDto team;
 
+    private BasicUserDto author;
+
 }
