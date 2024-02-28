@@ -19,6 +19,15 @@ export class NavbarComponent {
     this.showModal = !this.showModal;
   }
 
+  isAdmin(): boolean {
+    // Retrieve user information from local storage
+    // @ts-ignore
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    // Check if the user is an admin
+    return user && user.admin;
+  }
+
+
   logout() {
     this.toggleModal();
     localStorage.clear();
