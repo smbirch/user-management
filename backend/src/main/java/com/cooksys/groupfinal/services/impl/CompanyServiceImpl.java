@@ -161,6 +161,13 @@ public class CompanyServiceImpl implements CompanyService {
         //TODO in case we need to affix title
         return announcementMapper.entityToDto(announcementRepository.saveAndFlush(a));
 	}
+	
+		@Override
+		public TeamDto getTeamById(Long companyId, Long teamId) {
+			findCompany(companyId);
+			Team team = findTeam(teamId);
+			return teamMapper.entityToDto(teamRepository.saveAndFlush(team));
+		}
 
 	// ////////////////////////////////////////
 	
