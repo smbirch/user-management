@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Announcement} from "../../../models/announcement";
 import {AnnouncementService} from "../../../services/announcement.service";
+import {CreateAnnouncementModalComponent} from "../create-announcement-modal/create-announcement-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
     this.announcementService.findAll().subscribe(
       (data: Announcement[]) => {
         this.announcements = data;
+        console.log(data)
       },
       (error) => {
         console.error('Error fetching announcements:', error);
@@ -47,23 +49,15 @@ export class HomeComponent implements OnInit {
     // Get author's name from local storage
     const userJson = localStorage.getItem('currentUser');
     if (userJson) {
-      console.log(userJson)
       const user = JSON.parse(userJson);
       this.authorName = `${user.firstName} ${user.lastName}`;
     }
-    this.showModal = true;
+    this.toggleModal();
+    console.log(this.showModal)
+
   }
 
-// closeModal()
-// {
-//   this.showModal = false;
-//   this.authorName = '';
-//   this.announcementText = '';
-// }
-
-  submitAnnouncement() {
-
-    console.log('Submitted Announcement:', this.announcementText);
-    // this.closeModal();
+  toggleModal(): void {
+    this.showModal = !this.showModal;
   }
 }
