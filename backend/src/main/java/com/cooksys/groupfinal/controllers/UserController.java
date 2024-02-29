@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping
-    public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto, BasicUserDto basicUserDto) {
-        return userService.createUser(userRequestDto, basicUserDto);
+    public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto) {
+        return userService.createUser(userRequestDto);
     }
 
 }
