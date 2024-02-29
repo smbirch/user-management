@@ -32,9 +32,7 @@ export class CreateAnnouncementModalComponent {
   }
 
   submitAnnouncement() {
-    console.log('Submitted Announcement:', this.announcementText);
 
-    // Retrieve selectedCompany data from localStorage
     const selectedCompanyString = localStorage.getItem('selectedCompany');
     if (!selectedCompanyString) {
       throw new Error('selectedCompany data not found in local storage.');
@@ -42,14 +40,11 @@ export class CreateAnnouncementModalComponent {
     const selectedCompany = JSON.parse(selectedCompanyString);
     const companyId: number = selectedCompany.id;
 
-    // Retrieve currentUser data from localStorage
     const currentUserString = localStorage.getItem('currentUser');
     if (!currentUserString) {
       throw new Error('currentUser data not found in local storage.');
     }
     const currentUser = JSON.parse(currentUserString);
-    const isAdmin: boolean = currentUser.admin;
-
     const announcementDto: AnnouncementDto = {
       title: 'Your Title Here',
       date: new Date(),
@@ -67,11 +62,13 @@ export class CreateAnnouncementModalComponent {
       (response) => {
         console.log('Announcement saved:', response);
         this.closeModal();
+        this.location.go('/home');
+        window.location.reload();
+
       },
       (error) => {
         console.error('Error saving announcement:', error);
         this.closeModal();
-        // Handle error if necessary
       }
     );
   }

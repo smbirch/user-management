@@ -7,56 +7,56 @@ import {User} from "../../../models/user";
 
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
-    credentials: CredentialsDto = {username: '', password: ''};
+  credentials: CredentialsDto = {username: '', password: ''};
 
-    constructor(private userService: UserServiceService, private router: Router) {
-    }
+  constructor(private userService: UserServiceService, private router: Router) {
+  }
 
-    login() {
-        this.userService.login(this.credentials).subscribe(
-            (user: User) => {
-                console.log(user)
-                // Save user info to local storage
-                localStorage.setItem('currentUser', JSON.stringify({
-                    id: user.id,
-                    username: user.username,
-                    firstName: user.profile?.firstName,
-                    lastName: user.profile?.lastName,
-                    email: user.email,
-                    active: user.active,
-                    status: user.status,
-                    admin: user.admin,
-                    isLoggedIn: true
-                }));
+  login() {
+    this.userService.login(this.credentials).subscribe(
+      (user: User) => {
+        console.log(user)
+        // Save user info to local storage
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: user.id,
+          username: user.username,
+          firstName: user.profile?.firstName,
+          lastName: user.profile?.lastName,
+          email: user.email,
+          active: user.active,
+          status: user.status,
+          admin: user.admin,
+          isLoggedIn: true
+        }));
 
-                // Extract companies and teams data
-                const companies: Company[] | undefined = user.companies;
-                const teams: Team[] | undefined = user.teams;
+        // Extract companies and teams data
+        const companies: Company[] | undefined = user.companies;
+        const teams: Team[] | undefined = user.teams;
 
-                // Save companies and teams data to local storage separately
-                localStorage.setItem('companies', JSON.stringify(companies));
-                localStorage.setItem('teams', JSON.stringify(teams));
+        // Save companies and teams data to local storage separately
+        localStorage.setItem('companies', JSON.stringify(companies));
+        localStorage.setItem('teams', JSON.stringify(teams));
 
-                // Navigate based on user role
-                if (user.admin) {
-                    this.router.navigate(['/companies']);
-                } else {
-                    this.router.navigate(['/home']);
-                }
-            },
-            (error) => {
-                console.error('Login failed: ', error);
-            }
-        );
-    }
+        // Navigate based on user role
+        if (user.admin) {
+          this.router.navigate(['/companies']);
+        } else {
+          this.router.navigate(['/home']);
+        }
+      },
+      (error) => {
+        console.error('Login failed: ', error);
+      }
+    );
+  }
 
-    goToCompanies() {
-        this.router.navigateByUrl('/companies');
-    }
+  goToCompanies() {
+    this.router.navigateByUrl('/companies');
+  }
 }
