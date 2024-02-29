@@ -1,0 +1,28 @@
+ww-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, .75);
+    padding: 40px;
+    overflow: auto;
+}
+
+.ww-modal-body {
+    padding: 20px;
+    background: #fff;
+    color: #ff6550;
+    margin: auto;
+    text-align: center;
+    width: 50%;
+}
+
+
+body.dark-mode .ww-modal {
+    background-color: rgb(91, 91, 91);
+}
+  
+body.dark-mode .ww-modal .ww-modal-body {
+background: rgb(91, 91, 91);
+color: #fff;
+}

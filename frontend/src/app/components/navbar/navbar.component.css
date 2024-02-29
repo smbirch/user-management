@@ -1,0 +1,67 @@
+.menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.menu-item {
+  margin-right: 20px;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.home-button {
+  padding: 8px 16px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.home-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.hamburger-menu {
+  cursor: pointer;
+}
+
+.hamburger {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+}
+
+.modal {
+
+}
+
+.menu-bar.open .modal {
+  top: 60px;
+}
+
+.modal-link,
+.logout-button {
+  padding: 12px 20px;
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+
+.logout-button:hover,
+.modal-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
