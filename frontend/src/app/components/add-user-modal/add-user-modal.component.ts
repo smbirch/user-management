@@ -90,7 +90,8 @@ export class AddUserModalComponent {
         // Handle success
         console.log('User saved:', response);
         // Optionally, close the modal after saving
-        this.closeModal.emit();
+        window.location.reload();
+
       },
       (error: any) => {
         // Handle error
