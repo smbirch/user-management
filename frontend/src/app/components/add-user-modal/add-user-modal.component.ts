@@ -48,7 +48,6 @@ export class AddUserModalComponent {
       return;
     }
     const currentCompanyJson = JSON.parse(currentCompany);
-    console.log(currentCompanyJson)
 
     const credentials: CredentialsDto = {
       username: this.username,
@@ -63,48 +62,38 @@ export class AddUserModalComponent {
     };
 
 
-
-
     const companies: CompanyDto = {
-      description: "",
-      name: "",
-      teams: [],
-      users: [],
-      // @ts-ignore
-      id: currentCompanyJson.id
+      description: currentCompanyJson[0].description,
+      name: currentCompanyJson[0].name,
+      teams: currentCompanyJson[0].teams,
+      employees: currentCompanyJson[0].employees,
+      id: currentCompanyJson[0].id
     }
 
     const userRequest: UserRequestDto = {
       credentials: credentials,
-      profile: profile,
       companies: companies,
+      profile,
+
       admin: this.makeAdmin,
       basicUserDto: {
         // @ts-ignore
         id: currentUser.id,
-        profile: {
-          // @ts-ignore
-          firstname: currentUser.firstname,
-          // @ts-ignore
-          lastname: currentUser.lastname,
-          // @ts-ignore
-          email: currentUser.email,
-          // @ts-ignore
-          phone: currentUser.phone,
-        },
+
         // @ts-ignore
         admin: currentUser.admin,
         // @ts-ignore
         active: currentUser.active,
         // @ts-ignore
         status: currentUser.status,
+
       },
     };
 
     this.userService.save(userRequest).subscribe(
       (response: any) => {
-        console.log(userRequest);
-        window.location.reload();
+        console.log("here");
+        // window.location.reload();
 
       },
       (error: any) => {

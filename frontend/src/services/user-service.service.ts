@@ -20,7 +20,7 @@ export class UserServiceService {
   }
 
   public save(user: UserRequestDto) {
-    console.log("here")
+    console.log(user)
     return this.http.post<User>(this.usersUrl, user);
   }
 
