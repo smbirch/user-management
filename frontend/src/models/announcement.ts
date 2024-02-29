@@ -1,4 +1,5 @@
 import {User} from "./user";
+import {ProfileDto} from "../app/profile-dto";
 
 export class Announcement {
   id: number;
@@ -6,6 +7,7 @@ export class Announcement {
   title: string;
   message: string;
   author: User;
+
 
   constructor(
     id: number,
