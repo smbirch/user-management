@@ -38,7 +38,7 @@
 <div>
 <ww-modal id = "modal-add-team">
   <button (click)="closeModal()" style="margin-left: 93%;">X</button>
-  <h1>Add a Team Modal</h1>
+  <h1>Add a Team</h1>
   <input type="text" placeholder="team name" [(ngModel)]="newTeamName">
   <input type="text" placeholder="description" [(ngModel)]="newTeamDescription">
   <h2>Select Users</h2>
@@ -56,6 +56,6 @@
   
   
   <button (click)="closeModal(); createTeam();" class="button-style">submit</button>
-  <button (click)="clearSelection()">clear selection</button>
+  <button (click)="clearSelection()" class="clear">clear selection</button>
 </ww-modal>
 </div>

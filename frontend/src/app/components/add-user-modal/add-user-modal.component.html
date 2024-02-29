@@ -2,6 +2,8 @@
   <div class="modal-content">
     <span class="close" (click)="onCloseModal()">&times;</span>
 
+    <h2>Add User</h2>
+
     <form (ngSubmit)="onSubmit()">
       <input
         type="text"
@@ -33,13 +35,13 @@
         [(ngModel)]="phone"
         name="phone"
       />
-      <input
+      <input class="password"
         type="password"
         placeholder="Password"
         [(ngModel)]="password"
         name="password"
       />
-      <input
+      <input class="password"
         type="password"
         placeholder="Confirm Password"
         name="confirmPassword"

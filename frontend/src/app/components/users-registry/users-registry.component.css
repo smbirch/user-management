@@ -23,8 +23,9 @@ body {
   grid-template-columns: repeat(6, 1fr);
 }
 
-.user-row.header {
+.header {
   font-weight: bold;
+  color: #1BA098;
 }
 
 .user-cell {
@@ -37,13 +38,19 @@ body {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 20px;
-  background-color: #525964;
+  background-color: #1BA098;
+  border-width: 4px solid;
   color: #fff;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .add-user-button:hover {
-  background-color: #4d48e1;
+  background-color: #051622;
+
+}
+
+.overview {
+  color: #ddd;
+
 }
