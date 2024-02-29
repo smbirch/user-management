@@ -74,7 +74,7 @@ export class AddUserModalComponent {
       profile,
 
       admin: this.makeAdmin,
-      companyId: currentCompany,
+      companyId: companies.id,
       basicUserDto: {
         // @ts-ignore
         id: currentUser.id,
@@ -91,7 +91,7 @@ export class AddUserModalComponent {
     this.userService.save(userRequest).subscribe(
       (response: any) => {
         console.log('here');
-        // window.location.reload();
+        window.location.reload();
       },
       (error: any) => {
         console.error('Error saving user:', error);
