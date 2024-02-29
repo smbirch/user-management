@@ -4,20 +4,25 @@ import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Credentials;
 import com.cooksys.groupfinal.entities.Profile;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
+import com.cooksys.groupfinal.mappers.CompanyMapper;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,8 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
   private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
+    private final CompanyMapper companyMapper;
+    private final CompanyRepository companyRepository;
 	
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -33,6 +40,14 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("The username provided does not belong to an active user.");
         }
         return user.get();
+    }
+
+    private Company findCompany(Long id) {
+        Optional<Company> company = companyRepository.findById(id);
+        if (company.isEmpty()) {
+            throw new NotFoundException("A company with the provided id does not exist.");
+        }
+        return company.get();
     }
 
     private void validateRole(BasicUserDto basicUserDto) {
@@ -78,6 +93,9 @@ public class UserServiceImpl implements UserService {
         p.setLastName(userRequestDto.getProfile().getLastName());
         p.setPhone(userRequestDto.getProfile().getPhone());
         u.setProfile(p);
+        Set<Company> setOfCompanies = new HashSet<>();
+        setOfCompanies.add(findCompany(userRequestDto.getCompanyId()));
+        u.setCompanies(setOfCompanies);
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(u));
     }
 

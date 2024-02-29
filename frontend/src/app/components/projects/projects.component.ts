@@ -12,6 +12,7 @@ import { Team } from 'src/models/team';
 import { TeamService } from 'src/services/team.service';
 import { ProjectService } from 'src/services/project.service';
 import { ModalsService } from 'src/services/modal.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-projects',
@@ -55,7 +56,8 @@ export class ProjectsComponent implements OnInit,OnDestroy{
     protected modalService: ModalsService,
     private activatedRoute: ActivatedRoute, 
     private teamService: TeamService,
-    private router: Router){}
+    private router: Router,
+    private location: Location){}
 
   ngOnInit(): void {
     
@@ -95,12 +97,14 @@ export class ProjectsComponent implements OnInit,OnDestroy{
         next: (data) => {
           this.projects = data;
           console.log(this.projects); 
+          
         },
         error: (error) => console.error('There was a problem getting company projects', error.message)
       });
     } else {
       console.error('Team ID is null, cannot fetch projects.');
     }
+    
   }
   getDto(){
     
@@ -118,6 +122,10 @@ export class ProjectsComponent implements OnInit,OnDestroy{
       });
 
     }
+     //auto reload
+     console.log('reloading');
+     this.location.replaceState(`/projects/${this.teamId}`);
+     window.location.reload();
   }
   createProjectDto(): any {
     const projectDto = {
@@ -190,6 +198,10 @@ export class ProjectsComponent implements OnInit,OnDestroy{
       });
 
     }
+     //auto reload
+     console.log('reloading');
+     this.location.replaceState(`/projects/${this.teamId}`);
+     window.location.reload();
   }
 
   //Get current user info

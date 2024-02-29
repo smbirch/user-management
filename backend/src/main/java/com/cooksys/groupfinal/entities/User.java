@@ -7,6 +7,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -41,9 +43,15 @@ public class User {
 	@EqualsAndHashCode.Exclude
 	private Set<Announcement> announcements = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "employees")
+	@ManyToMany
+	@JoinTable(
+		name = "company_employees",
+		joinColumns = @JoinColumn(name = "employees_id"),
+		inverseJoinColumns = @JoinColumn(name = "company_id")
+	)
 	@EqualsAndHashCode.Exclude
 	private Set<Company> companies = new HashSet<>();
+
 	
 	@ManyToMany(mappedBy = "teammates")
 	@EqualsAndHashCode.Exclude
