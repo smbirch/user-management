@@ -1,4 +1,3 @@
-
 <div class="teams-container" *ngIf="currentAdmin === true">
   <div *ngFor="let team of teams" class = "team-item">
       <span class ="clickable-item" (click)="goToProjects(team.id)">{{team.name}}</span>
@@ -12,17 +11,10 @@
 
   </div>
 
-
-  <div>
-    <div>
-      <h1>Add a Team</h1>
-      <div class="button-container">
-              <button (click)="openModal()">
-                  Add a Team
-             </button>
-      </div>
-    </div>
-  </div>
+    <button class="add-container" (click)="openModal()"> 
+      <img class="plus" src="/assets/plus_icon.png" alt="plus_icon"> 
+      <h3 class="new_team">New Team</h3>
+    </button>
 
 </div>
 
