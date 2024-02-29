@@ -13,4 +13,6 @@ public class UserRequestDto {
     
     private boolean admin;
 
+    private BasicUserDto basicUserDto;
+
 }

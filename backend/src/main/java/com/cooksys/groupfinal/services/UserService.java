@@ -9,7 +9,7 @@ public interface UserService {
 
 	FullUserDto login(CredentialsDto credentialsDto);
 
-    FullUserDto createUser(UserRequestDto userRequestDto, BasicUserDto basicUserDto);
+    FullUserDto createUser(UserRequestDto userRequestDto);
 
    
 }

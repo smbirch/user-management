@@ -60,10 +60,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public FullUserDto createUser(UserRequestDto userRequestDto, BasicUserDto basicUserDto) {
+    public FullUserDto createUser(UserRequestDto userRequestDto) {
 
-        validateRole(basicUserDto);
-
+         if (!userRequestDto.getBasicUserDto().isAdmin()) {
+            throw new NotAuthorizedException("Not an admin");
+         }
         User u = fullUserMapper.requestDtoToEntity(userRequestDto);
         u.setActive(true);
         u.setAdmin(userRequestDto.isAdmin());
