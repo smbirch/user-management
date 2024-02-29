@@ -1,1 +1,29 @@
-<p>users-registry works!</p>
+<div class="container">
+  <h1>User Registry</h1>
+  <p>A general view of the members of your organization</p>
+
+  <div class="user-table">
+
+    <div class="user-row header">
+      <div class="user-cell">Name</div>
+      <div class="user-cell">Email</div>
+      <div class="user-cell">Team</div>
+      <div class="user-cell">Active</div>
+      <div class="user-cell">Admin</div>
+      <div class="user-cell">Status</div>
+    </div>
+
+    <div *ngFor="let user of users" class="user-row">
+      <div class="user-cell">{{ user.profile.firstname }} {{ user.profile.lastname }}</div>
+      <div class="user-cell">{{ user.profile.email }}</div>
+      <div class="user-cell">{{ getUserTeam(user) }}</div>
+      <div class="user-cell">{{ user.active }}</div>
+      <div class="user-cell">{{ user.admin }}</div>
+      <div class="user-cell">{{ user.status }}</div>
+    </div>
+  </div>
+
+  <button class="add-user-button" (click)="openAddUserModal()">Add User</button>
+
+  <app-add-user-modal [showModal]="showModal" (closeModal)="closeAddUserModal()"></app-add-user-modal>
+</div>
