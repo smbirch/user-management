@@ -45,8 +45,8 @@ public class User {
 	
 	@ManyToMany
 	@JoinTable(
-		name = "user_company",
-		joinColumns = @JoinColumn(name = "user_id"),
+		name = "company_employees",
+		joinColumns = @JoinColumn(name = "employees_id"),
 		inverseJoinColumns = @JoinColumn(name = "company_id")
 	)
 	@EqualsAndHashCode.Exclude

@@ -13,6 +13,8 @@ public class UserRequestDto {
     
     private boolean admin;
 
-    private FullUserDto fullUserDto;
+    private Long companyId;
+
+    private BasicUserDto basicUserDto;
 
 }
