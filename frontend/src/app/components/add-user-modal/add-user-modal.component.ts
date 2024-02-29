@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserServiceService} from '../../../services/user-service.service';
-import {ProfileDto} from '../../profile-dto';
-import {UserRequestDto} from '../../user-request-dto';
-import {BasicUserDto} from '../../basic-user-dto';
-import {FullUserDto} from '../../full-user-dto';
-import {User} from '../../../models/user';
-import {CredentialsDto} from '../../credentials-dto';
-import {CompanyDto} from "../../company-dto";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { UserServiceService } from '../../../services/user-service.service';
+import { ProfileDto } from '../../profile-dto';
+import { UserRequestDto } from '../../user-request-dto';
+import { BasicUserDto } from '../../basic-user-dto';
+import { FullUserDto } from '../../full-user-dto';
+import { User } from '../../../models/user';
+import { CredentialsDto } from '../../credentials-dto';
+import { CompanyDto } from '../../company-dto';
 
 @Component({
   selector: 'app-add-user-modal',
@@ -27,8 +27,7 @@ export class AddUserModalComponent {
   phone: string = '';
   companyId: number | undefined;
 
-  constructor(private userService: UserServiceService) {
-  }
+  constructor(private userService: UserServiceService) {}
 
   onCloseModal() {
     this.closeModal.emit();
@@ -42,7 +41,7 @@ export class AddUserModalComponent {
     }
     const currentUser: User = JSON.parse(currentUserJson);
 
-    const currentCompany = localStorage.getItem('companies')
+    const currentCompany = localStorage.getItem('companies');
     if (!currentCompany) {
       console.error('Current company data not found in local storage.');
       return;
@@ -61,14 +60,13 @@ export class AddUserModalComponent {
       phone: this.phone,
     };
 
-
     const companies: CompanyDto = {
       description: currentCompanyJson[0].description,
       name: currentCompanyJson[0].name,
       teams: currentCompanyJson[0].teams,
       employees: currentCompanyJson[0].employees,
-      id: currentCompanyJson[0].id
-    }
+      id: currentCompanyJson[0].id,
+    };
 
     const userRequest: UserRequestDto = {
       credentials: credentials,
@@ -76,6 +74,7 @@ export class AddUserModalComponent {
       profile,
 
       admin: this.makeAdmin,
+      companyId: currentCompany,
       basicUserDto: {
         // @ts-ignore
         id: currentUser.id,
@@ -86,15 +85,13 @@ export class AddUserModalComponent {
         active: currentUser.active,
         // @ts-ignore
         status: currentUser.status,
-
       },
     };
 
     this.userService.save(userRequest).subscribe(
       (response: any) => {
-        console.log("here");
+        console.log('here');
         // window.location.reload();
-
       },
       (error: any) => {
         console.error('Error saving user:', error);
