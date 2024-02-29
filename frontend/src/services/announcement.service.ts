@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import {User} from 'src/models/user';
-import {Team} from 'src/models/team';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Announcement} from 'src/models/announcement';
 
@@ -14,21 +12,35 @@ class AnnouncementDto {
 export class AnnouncementService {
   private announcementsUrl = 'http://localhost:8080/company';
 
+
   constructor(private http: HttpClient) {
   }
 
+
   public findAll(): Observable<Announcement[]> {
-    const companiesString = localStorage.getItem('selectedCompany');
-    if (!companiesString) {
-      throw new Error('Companies data not found in local storage.');
+    let companyId: number;
+
+    const currentUserString = localStorage.getItem('currentUser');
+    if (!currentUserString) {
+      throw new Error('Current user data not found in local storage.');
     }
-    const companies = JSON.parse(companiesString);
+    const currentUser = JSON.parse(currentUserString);
+    const isAdmin = currentUser.admin;
 
-    const companyId = companies.id;
-
-    if (!companyId) {
-      throw new Error('Company ID not found in companies data.');
-      //   TODO: redirect user to selection page and try again
+    if (isAdmin) {
+      const selectedCompanyString = localStorage.getItem('selectedCompany');
+      if (!selectedCompanyString) {
+        throw new Error('Selected company data not found in local storage.');
+      }
+      const selectedCompany = JSON.parse(selectedCompanyString);
+      companyId = selectedCompany.id;
+    } else {
+      const companiesString = localStorage.getItem('companies');
+      if (!companiesString) {
+        throw new Error('Companies data not found in local storage.');
+      }
+      const companies = JSON.parse(companiesString);
+      companyId = companies[0].id;
     }
 
     const url = `${this.announcementsUrl}/${companyId}/announcements`;
@@ -39,7 +51,4 @@ export class AnnouncementService {
     const url = `${this.announcementsUrl}/${companyId}/announcements`;
     return this.http.post<Announcement>(url, announcement);
   }
-
-
-
 }

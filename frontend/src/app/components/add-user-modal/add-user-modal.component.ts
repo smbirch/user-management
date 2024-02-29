@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-add-user-modal',
@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-user-modal.component.css']
 })
 export class AddUserModalComponent {
+  @Input() showModal: boolean = false;
+  @Output() closeModal = new EventEmitter<void>();
+  makeAdmin: boolean = false;
 
+  onCloseModal() {
+    this.closeModal.emit();
+  }
 }

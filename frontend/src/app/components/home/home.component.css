@@ -1,5 +1,5 @@
 .home-container {
-  background-color: #f0f0f0;
+  background-color: #051622;
   padding: 20px;
 }
 
@@ -13,11 +13,18 @@
   width: 10%;
   padding: 10px;
   font-size: 14px;
-  background-color: #3d5169;
+  background-color: #1BA098;
+  border-width: 3px;
+  border-color: #1BA098;
+  border-style: solid;
   color: #fff;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.new-announcement-button:hover {
+  background-color: #051622;
+  border-color: #1BA098;
 }
 
 .announcement-list {
@@ -27,8 +34,8 @@
 }
 
 .announcement {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background: rgb(31, 52, 77);
+  border-radius: 10px;
   padding: 10px;
 }
 
@@ -39,3 +46,12 @@
 .announcement-body {
   font-size: 14px;
 }
+
+.name_title, .ann_body {
+  color: #ddd;
+}
+
+.date {
+  color: gray;
+}
+

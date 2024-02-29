@@ -1,1 +1,19 @@
-<p>add-user-modal works!</p>
+<div class="modal" [style.display]="showModal ? 'block' : 'none'">
+
+  <div class="modal-content">
+
+    <span class="close" (click)="onCloseModal()">&times;</span>
+
+    <form>
+      <input type="text" placeholder="First Name">
+      <input type="text" placeholder="Last Name">
+      <input type="text" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <input type="password" placeholder="Confirm Password">
+      <div class="admin-toggle">
+        <label for="adminToggle">Make Admin?</label>
+        <input type="checkbox" id="adminToggle">
+      </div>
+    </form>
+  </div>
+</div>
