@@ -1,3 +1,9 @@
+h1 {
+  font-weight: 100;
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
 .login-container {
   background-color: #051622;
   color: #fff;
@@ -29,11 +35,12 @@
 .input-group input {
   padding: 10px;
   font-size: 16px;
-  color: #1BA098;
+  color: #1ba098;
   background-color: #051622;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 4px solid white;
   text-align: center;
 }
 
@@ -41,9 +48,9 @@ button {
   width: 70%;
   padding: 10px;
   font-size: 16px;
-  background-color: #1BA098;
+  background-color: #051622;
   border-width: 3px;
-  border-color: #1BA098;
+  border-color: #1ba098;
   border-style: solid;
   color: #fff;
   border-radius: 50px;
@@ -55,6 +62,10 @@ button {
 
 button:hover {
   background-color: #051622;
+}
+
+::placeholder {
+  color: #1ba098;
 }
 
 .alert {
@@ -74,7 +85,6 @@ button:hover {
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
-
 
 .fade-out {
   animation: fadeOut 3s forwards;
