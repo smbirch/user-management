@@ -14,6 +14,7 @@ export class CreateAnnouncementModalComponent {
   @Input() showModal: boolean = false;
   @Input() authorName: string = '';
   announcementText: string = '';
+  announcementTitle: string = '';
 
   constructor(private router: Router, private announcementService: AnnouncementService, private home: HomeComponent, private location: Location) {
   }
@@ -21,6 +22,7 @@ export class CreateAnnouncementModalComponent {
   closeModal() {
     this.showModal = false;
     this.announcementText = '';
+    this.announcementTitle = '';
   }
 
   openModal(): boolean {
@@ -46,7 +48,7 @@ export class CreateAnnouncementModalComponent {
     }
     const currentUser = JSON.parse(currentUserString);
     const announcementDto: AnnouncementDto = {
-      title: 'Your Title Here',
+      title: this.announcementTitle,
       date: new Date(),
       message: this.announcementText,
       author: {
