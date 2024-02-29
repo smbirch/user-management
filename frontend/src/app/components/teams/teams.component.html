@@ -2,7 +2,7 @@
 <div class="teams-container">
     <div *ngFor="let team of teams" class = "team-item">
 
-        <span class ="team-name-style">{{team.name}}</span>
+        <span class ="clickable-item" (click)="goToProjects(team.id)">{{team.name}}</span>
         <p>{{team.description}}</p>
         <span class ="team-numofprojects-style"></span>
        <div class="test-container">

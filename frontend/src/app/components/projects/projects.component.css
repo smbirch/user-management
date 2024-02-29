@@ -1,0 +1,14 @@
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the bubbles if desired */
+    gap: 10px; /* Adjust the space between bubbles */
+}
+
+.project-bubble {
+    background-color: #f0f0f0; /* Light gray background */
+    border-radius: 15px; /* Rounded corners for the bubble effect */
+    padding: 10px 20px; /* Padding inside each bubble */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+    width: fit-content; /* Adjust width based on content */
+}

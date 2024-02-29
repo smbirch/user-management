@@ -17,4 +17,11 @@
     grid-template-columns: repeat(2, 1fr);  /* Adjust minmax for your needs */
     gap: 10px; /* Space between items */
   }
-  
+  .clickable-item {
+    cursor: pointer;
+    transition: text-decoration 0.3s; 
+}
+
+.clickable-item:hover {
+    text-decoration: underline; 
+}
