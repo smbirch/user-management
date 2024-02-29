@@ -7,11 +7,18 @@
   }
   
   .team-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: rgb(31, 52, 77);
     padding: 20px;
-    
   }
+
+  .team-name-style {
+    color: white;
+  }
+
+  
+
+
   .test-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);  /* Adjust minmax for your needs */
