@@ -3,7 +3,7 @@ import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 import { Router } from '@angular/router';
 
-import { Project} from 'src/models/project';
+import { Project } from 'src/models/project';
 import { OnInit } from '@angular/core';
 
 import { TeamService } from 'src/services/team.service';
@@ -16,10 +16,9 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
-  styleUrls: ['./teams.component.css']
+  styleUrls: ['./teams.component.css'],
 })
-export class TeamsComponent implements OnInit{
-
+export class TeamsComponent implements OnInit {
   company_id: number = 0;
 
   teams?: Team[];
@@ -52,7 +51,7 @@ export class TeamsComponent implements OnInit{
     this.getUsers();
     
   }
-  
+
 
   getWorkerTeams(teams: Team[]): Team[] {
 
@@ -78,6 +77,7 @@ export class TeamsComponent implements OnInit{
    
 
 
+
     //this for an admin user
     if(currentUserString && currentCompanyString){
       const userDetails = JSON.parse(currentUserString);
@@ -88,14 +88,15 @@ export class TeamsComponent implements OnInit{
       this.currentAdmin = userDetails.admin;
       this.currentFirstName = userDetails.firstName;
       this.currentId = userDetails.id;
-      this.currentLoggedIn =userDetails.isLoggedIn;
-      this.currentLastName = userDetails.lastName
+      this.currentLoggedIn = userDetails.isLoggedIn;
+      this.currentLastName = userDetails.lastName;
       this.currentStatus = userDetails.status;
       this.companyId = companyDetail.id;
 
       console.log('the company id is', this.companyId);
       console.log('user is admin', this.currentAdmin);
     }
+
    
     //this is for a standard user
     if(currentUserString && currentCompanyWorkerString){
@@ -127,8 +128,8 @@ export class TeamsComponent implements OnInit{
     error: (error) => console.error('There was a problem getting company teams', error.message)
    });
    console.log(this.teams);
-  }
 
+  }
 
   //this is just a test method
   testService(){
@@ -149,31 +150,29 @@ export class TeamsComponent implements OnInit{
         }
        });
     }
-    
+
   }
 
-  
-  getUsers(){
+  getUsers() {
     this.userService.findCompanyActiveUsers().subscribe({
       next: (data) => {
-
         this.users = this.conformToUsers(data);
-        console.log('here are the users',this.users);
+        console.log('here are the users', this.users);
       },
       error: (error) => {
-        console.error("there was a problem getting the users", error);
-      }
+        console.error('there was a problem getting the users', error);
+      },
     });
   }
-  
+
   private conformToTeam(data: any[]): Team[] {
-    return data.map(team => {
-        const conformedTeam = new Team();
-        conformedTeam.id = team.id;
-        conformedTeam.name = team.name;
-        conformedTeam.description = team.description;
-        conformedTeam.teammates = team.teammates.map((teammate: any) => {
-            const user = new User();
+    return data.map((team) => {
+      const conformedTeam = new Team();
+      conformedTeam.id = team.id;
+      conformedTeam.name = team.name;
+      conformedTeam.description = team.description;
+      conformedTeam.teammates = team.teammates.map((teammate: any) => {
+        const user = new User();
 
             user.id = teammate.id;
             user.firstName = teammate.profile.firstName; 
@@ -259,17 +258,15 @@ createTeam(){
     this.modalService.open('modal-add-team');
   }
 
-  closeModal(){
-
+  closeModal() {
     this.modalService.close();
   }
 
-  clearSelection(){
+  clearSelection() {
     this.selectedUsers = [];
   }
 
-  goToProjects(teamId: number | undefined){
-    
+  goToProjects(teamId: number | undefined) {
     if (teamId !== undefined) {
       this.router.navigate(['/projects', teamId.toString()]);
     } else {

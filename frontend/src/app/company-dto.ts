@@ -6,5 +6,5 @@ export interface CompanyDto {
   name: string;
   description: string;
   teams: TeamDto[];
-  users: BasicUserDto[];
+  employees: BasicUserDto[];
 }
