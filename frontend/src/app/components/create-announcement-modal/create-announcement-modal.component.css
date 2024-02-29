@@ -10,48 +10,52 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .modal-content {
   background-color: #051622;
-  margin: 15% auto;
-  padding: 40px;
+  padding: 20px;
   border-radius: 10px;
-  width: 80%;
   max-width: 400px;
+  width: 100%;
 }
 
-.modal.show {
-  display: block;
+h2 {
+  color: #fff;
+}
+
+.announcement-title-input,
+.announcement-text {
+  width: calc(100% - 40px);
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #051622;
+  border: 2px solid #1BA098;
+  border-radius: 5px;
 }
 
 .announcement-text {
-  width: 100%;
-  height: 200px;
-  resize: vertical;
-  background-color: #051622;
-  color: white;
+  height: 150px;
 }
 
+.submit-button {
+  width: calc(100% - 40px);
+  padding: 10px;
+  font-size: 16px;
+  background-color: #1BA098;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-  .submit-button {
-    min-width:fit-content;
-    margin: 10px auto;
-    padding: 10px;
-    font-size: 14px;
-    background-color: #1BA098;
-    border-width: 3px;
-    border-color: #1BA098;
-    border-style: solid;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .submit-button:hover {
-    background-color: #051622;
-    border-color: #1BA098;
-  }
-
-  .cancel-button {
-    margin-top: 10px;
-  }
+.submit-button:hover {
+  background-color: #051622;
+}
