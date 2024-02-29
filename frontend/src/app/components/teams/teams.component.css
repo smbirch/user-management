@@ -31,9 +31,11 @@
     grid-template-columns: repeat(2, 1fr);  /* Adjust minmax for your needs */
     gap: 10px; /* Space between items */
   }
+
   .clickable-item {
     cursor: pointer;
     transition: text-decoration 0.3s; 
+    color: #ddd;
 }
 
 .clickable-item:hover {
@@ -42,4 +44,38 @@
 
 .select-style{
   width: 25%;
+}
+
+.team-user-container {
+  background-color: #1BA098;
+  align-items: center;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+}
+
+.description {
+  color: white;
+}
+
+.add-container {
+  background-color: #051622;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  border: 2px solid rgb(207, 178, 122);
+  padding: 10%;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.plus {
+  max-height: 100px;
+  max-width: fit-content;
+  filter: invert(77%) sepia(3%) saturate(3592%) hue-rotate(1deg) brightness(92%) contrast(95%);
+
+}
+.new_team {
+  margin-top: -5px;
+  color: #cfb27a;
 }

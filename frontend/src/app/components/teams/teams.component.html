@@ -1,9 +1,8 @@
-<p>teams works!</p>
 <div class="teams-container">
     <div *ngFor="let team of teams" class = "team-item">
 
         <span class ="clickable-item" (click)="goToProjects(team.id)">{{team.name}}</span>
-        <p>{{team.description}}</p>
+        <p class="description">{{team.description}}</p>
         <span class ="team-numofprojects-style"></span>
        <div class="test-container">
         <div *ngFor="let user of team.teammates" class="team-user-container">
@@ -14,16 +13,10 @@
     </div>
 
 
-    <div>
-      <div>
-        <h1>Add a Team</h1>
-        <div class="button-container">
-                <button (click)="openModal()">
-                    Add a Team
-               </button>
-        </div>
-      </div>
-    </div>
+    <button class="add-container" (click)="openModal()"> 
+      <img class="plus" src="/assets/plus_icon.png" alt="plus_icon"> 
+      <h2 class="new_team">New Team</h2>
+    </button>
 
 </div>
 
