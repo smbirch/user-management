@@ -15,9 +15,12 @@
 </div>
 
 <ww-modal id = "modal-add-project">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
     <h1>Add a Project</h1>
-    <input type="text" placeholder="project name" [(ngModel)]="newProjectName">
-    <textarea name="" id="" cols="30" rows="10" [(ngModel)]="newProjectDescription"></textarea>
+    <div class="text-container">
+        <input class="text-input" type="text" placeholder=" new project name" [(ngModel)]="newProjectName">
+        <textarea class ="text-area" name="" id="" cols="30" rows="10" [(ngModel)]="newProjectDescription"></textarea>
+    </div>
     
     
     <button (click)="closeModal(); createProject()" class="button-style">Submit</button>
@@ -25,9 +28,12 @@
 </ww-modal>
 
 <ww-modal id = "modal-edit-project">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
     <h1>Edit a Project</h1>
-    <input type="text" placeholder=" new project name" [(ngModel)]="newProjectName">
-    <input type="text" id="text-area" placeholder="new project description" [(ngModel)]="newProjectDescription">
+    <div class="text-container">
+        <input class="text-input" type="text" placeholder=" new project name" [(ngModel)]="newProjectName">
+        <textarea class ="text-area" name="" id="" cols="30" rows="10" [(ngModel)]="newProjectDescription"></textarea>
+    </div>
     
     
     <button (click)="closeModal(); editProject()" class="button-style">Submit</button>
@@ -35,10 +41,8 @@
 </ww-modal>
 
 <ww-modal id = "modal-view-project">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
     <h1>{{modalData.name}}</h1>
     <p>{{modalData.description}}</p>
-    
-    
-    <button (click)="closeModal()" class="view-button-style">X</button>
     
 </ww-modal>

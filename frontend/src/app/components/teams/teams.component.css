@@ -16,7 +16,14 @@
     color: white;
   }
 
-  
+  .selected-users{
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+  }
+  ul {
+    padding: 40px;
+  }
 
 
   .test-container {
@@ -31,4 +38,8 @@
 
 .clickable-item:hover {
     text-decoration: underline; 
+}
+
+.select-style{
+  width: 25%;
 }
