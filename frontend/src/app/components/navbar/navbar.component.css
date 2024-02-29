@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: #051622;
   color: white;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -11,6 +11,7 @@
 
 .menu-item {
   margin-right: 20px;
+  padding: 8px;
 }
 
 .spacer {
@@ -33,6 +34,8 @@
 
 .hamburger-menu {
   cursor: pointer;
+  background-color: #0D3A59;
+  border-radius: 4px;
 }
 
 .hamburger {
@@ -40,6 +43,7 @@
   height: 3px;
   background-color: white;
   margin: 5px 0;
+  border-radius: 5px;
 }
 
 .modal {
@@ -50,7 +54,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #0D3A59;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -65,9 +69,11 @@
 .logout-button {
   padding: 12px 20px;
   font-size: 18px;
-  color: white;
+  color: #1BA098;
   text-decoration: none;
   display: block;
+  text-align: center;
+
 }
 
 
@@ -75,4 +81,8 @@
 .modal-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+}
+
+.admin {
+  color: orangered;
 }
