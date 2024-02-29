@@ -7,26 +7,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TeamService {
-  private teamsUrl: string;
+  
 
   constructor(private http: HttpClient) {
-    this.teamsUrl = 'http://localhost:8080/company/6/teams';
+    
    }
 
-   public findAll() {
-    return this.http.get<Team[]>(this.teamsUrl);
-   }
+   
    
    public getTeamsByCompanyId(companyId: number): Observable<Team[]> {
-    return this.http.get<Team[]>(`${this.teamsUrl}/${companyId}/team`);
+    return this.http.get<Team[]>(`http://localhost:8080/company/${companyId}/teams`);
    }
 
    public saveTeam(companyId:number, TeamDto:any):Observable<Team[]> {
     console.log('teamdto',TeamDto);
     return this.http.post<Team[]>(`http://localhost:8080/company/${companyId}/teams`,TeamDto);
    }
-   public getTestTeam(){
-    return this.http.get<Team[]>('http://localhost:8080/company/6/teams');
+   public getTestTeam(companyId:number){
+    return this.http.get<Team[]>(`http://localhost:8080/company/${companyId}/teams`);
     console.log('in test team');
    }
 
@@ -34,5 +32,6 @@ export class TeamService {
     return this.http.get<Team[]>(`http://localhost:8080/company/${companyId}/teams/${teamId}`);
    }
   
+   
    //probably need to implement some error handling.
 }

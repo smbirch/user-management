@@ -20,6 +20,8 @@ export class TeamsComponent implements OnInit {
   company_id: number = 0;
 
   teams?: Team[];
+  workerTeams?: Team[];
+
   users?: User[];
 
   newTeamName?: string;
@@ -46,17 +48,43 @@ export class TeamsComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.initializeCurrentUser();
-    this.testService();
+    console.log('companyId',this.companyId);
+    let t = this.testService();
     this.getUsers();
+    
   }
 
-  initializeCurrentUser() {
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentCompanyString = localStorage.getItem('selectedCompany');
 
-    if (currentUserString && currentCompanyString) {
+  getWorkerTeams(teams: Team[]): Team[] {
+
+   let  tempTeam: Team[] = [];
+   for(let team of teams){
+    if(team.teammates){
+      const isUserInTeam = team.teammates.some(user => user.id === this.currentId);
+      if(isUserInTeam){
+        tempTeam.push(team);
+      }
+    }
+   }
+    return tempTeam;
+  }
+
+
+  initializeCurrentUser(){
+    const currentUserString = localStorage.getItem('currentUser');
+    let currentCompanyString = localStorage.getItem('selectedCompany');
+    let currentCompanyWorkerString = localStorage.getItem('companies');
+    console.log('companies',currentCompanyWorkerString)
+   console.log('current user', currentUserString)
+   
+
+
+
+    //this for an admin user
+    if(currentUserString && currentCompanyString){
       const userDetails = JSON.parse(currentUserString);
       const companyDetail = JSON.parse(currentCompanyString);
+      
 
       this.currentActive = userDetails.active;
       this.currentAdmin = userDetails.admin;
@@ -70,30 +98,61 @@ export class TeamsComponent implements OnInit {
       console.log('the company id is', this.companyId);
       console.log('user is admin', this.currentAdmin);
     }
+
+   
+    //this is for a standard user
+    if(currentUserString && currentCompanyWorkerString){
+      console.log('this is a standard user');
+      const userDetails = JSON.parse(currentUserString);
+      const workerDetail = JSON.parse(currentCompanyWorkerString);
+      
+
+      this.currentActive = userDetails.active;
+      this.currentAdmin = userDetails.admin;
+      this.currentFirstName = userDetails.firstName;
+      this.currentId = userDetails.id;
+      this.currentLoggedIn =userDetails.isLoggedIn;
+      this.currentLastName = userDetails.lastName
+      this.currentStatus = userDetails.status;
+      this.companyId = workerDetail[0].id;
+
+      console.log('the company id is', this.companyId);
+      console.log('user is admin', this.currentAdmin);
+    }
+    
   }
-  getTeams() {
-    this.teamService.getTeamsByCompanyId(this.company_id).subscribe({
-      next: (data) => (this.teams = data),
-      error: (error) =>
-        console.error(
-          'There was a problem getting company teams',
-          error.message
-        ),
-    });
-    console.log(this.teams);
+  getTeams(){
+   this.teamService.getTeamsByCompanyId(this.company_id).subscribe({
+    next: (data) => {
+      this.teams = data
+      console.log('teams',data)
+    },
+    error: (error) => console.error('There was a problem getting company teams', error.message)
+   });
+   console.log(this.teams);
+
   }
 
   //this is just a test method
-  testService() {
-    this.teamService.getTestTeam().subscribe({
-      next: (data) => {
-        this.teams = this.conformToTeam(data);
-        console.log(this.teams);
-      },
-      error: (error) => {
-        console.error('There was a problem getting company teams', error);
-      },
-    });
+  testService(){
+    if(this.companyId){
+      console.log('getting the teams');
+      this.teamService.getTestTeam(this.companyId).subscribe({
+        next: (data) => {
+          this.teams = this.conformToTeam(data);
+          this.workerTeams = this.getWorkerTeams(this.conformToTeam(data));
+
+
+          console.log('worker teams', this.workerTeams);
+          console.log('got the teams',this.teams);
+          
+        },
+        error: (error) => {
+          console.error('There was a problem getting company teams', error);
+        }
+       });
+    }
+
   }
 
   getUsers() {
@@ -211,4 +270,5 @@ export class TeamsComponent implements OnInit {
       console.error('Team ID is undefined. Cannot navigate to projects.');
     }
   }
+  
 }
