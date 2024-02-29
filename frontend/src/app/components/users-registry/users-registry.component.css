@@ -47,3 +47,7 @@ body {
 .add-user-button:hover {
   background-color: #4d48e1;
 }
+
+p {
+  color: white;
+}
