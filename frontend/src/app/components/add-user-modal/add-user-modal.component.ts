@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UserServiceService } from "../../../services/user-service.service";
-import {ProfileDto} from "../../profile-dto";
-import {UserRequestDto} from "../../user-request-dto";
-import {BasicUserDto} from "../../basic-user-dto";
-import {FullUserDto} from "../../full-user-dto";
-import {User} from "../../../models/user";
-import {CredentialsDto} from "../../credentials-dto";
+import { UserServiceService } from '../../../services/user-service.service';
+import { ProfileDto } from '../../profile-dto';
+import { UserRequestDto } from '../../user-request-dto';
+import { BasicUserDto } from '../../basic-user-dto';
+import { FullUserDto } from '../../full-user-dto';
+import { User } from '../../../models/user';
+import { CredentialsDto } from '../../credentials-dto';
 
 @Component({
   selector: 'app-add-user-modal',
   templateUrl: './add-user-modal.component.html',
-  styleUrls: ['./add-user-modal.component.css']
+  styleUrls: ['./add-user-modal.component.css'],
 })
 export class AddUserModalComponent {
   @Input() showModal: boolean = false;
@@ -18,12 +18,12 @@ export class AddUserModalComponent {
   makeAdmin: boolean = false;
 
   // Properties to store user input
-  username: string = "";
-  password: string = "";
-  firstName: string = "";
-  lastName: string = "";
-  email: string = "";
-  phone: string = "";
+  username: string = '';
+  password: string = '';
+  firstname: string = '';
+  lastname: string = '';
+  email: string = '';
+  phone: string = '';
 
   constructor(private userService: UserServiceService) {}
 
@@ -45,15 +45,15 @@ export class AddUserModalComponent {
     // Create credentials object
     const credentials: CredentialsDto = {
       username: this.username,
-      password: this.password
+      password: this.password,
     };
 
     // Create profile object
     const profile: ProfileDto = {
-      firstname: this.firstName,
-      lastname: this.lastName,
+      firstName: this.firstname,
+      lastName: this.lastname,
       email: this.email,
-      phone: this.phone
+      phone: this.phone,
     };
 
     // Create user request object and populate basicUserDto with the current user's data
@@ -67,21 +67,21 @@ export class AddUserModalComponent {
         id: currentUser.id,
         profile: {
           // @ts-ignore
-          firstname: currentUser.firstName,
+          firstname: currentUser.firstname,
           // @ts-ignore
-          lastname: currentUser.lastName,
+          lastname: currentUser.lastname,
           // @ts-ignore
           email: currentUser.email,
           // @ts-ignore
-          phone: currentUser.phone
+          phone: currentUser.phone,
         },
         // @ts-ignore
         admin: currentUser.admin,
         // @ts-ignore
         active: currentUser.active,
         // @ts-ignore
-        status: currentUser.status
-      }
+        status: currentUser.status,
+      },
     };
 
     // Call the UserService save method
