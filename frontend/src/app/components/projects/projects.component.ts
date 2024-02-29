@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Timestamp } from 'rxjs';
 import { OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable,Subscription, interval  } from 'rxjs';
 
 import { Project } from 'src/models/project';
 import { Team } from 'src/models/team';
@@ -46,10 +47,20 @@ export class ProjectsComponent implements OnInit,OnDestroy{
   currentLoggedIn?: boolean;
   companyId?: number;
 
-  constructor(private projectService: ProjectService, protected modalService: ModalsService,private activatedRoute: ActivatedRoute, private teamService: TeamService){}
+  modalData: any  = {};
+  private updateSubscription: Subscription | undefined
+
+
+  constructor(private projectService: ProjectService, 
+    protected modalService: ModalsService,
+    private activatedRoute: ActivatedRoute, 
+    private teamService: TeamService,
+    private router: Router){}
 
   ngOnInit(): void {
+    
     this.initializeCurrentUser();
+
     this.routeSub = this.activatedRoute.paramMap.subscribe(params => {
       this.teamIdParam = params.get('teamId');
       if(this.teamIdParam){
@@ -60,8 +71,14 @@ export class ProjectsComponent implements OnInit,OnDestroy{
       }
       
     });
+
+    //autorefresh
+  
+    //this.updateSubscription = interval(3000).subscribe((val)=> {this.getProjects()});
+
     this.getProjects();
     this.getTeamDto();
+
   }
 
   ngOnDestroy(): void {
@@ -175,6 +192,7 @@ export class ProjectsComponent implements OnInit,OnDestroy{
     }
   }
 
+  //Get current user info
   initializeCurrentUser(){
     const currentUserString = localStorage.getItem('currentUser');
     const currentCompanyString = localStorage.getItem('selectedCompany');
@@ -201,6 +219,16 @@ export class ProjectsComponent implements OnInit,OnDestroy{
   }
 
   //modal functions
+  openDescriptionModal(project: Project){
+    this.modalData = {
+      name: project.name,
+      id: project.id,
+      description: project.description,
+      teammates: project.team
+    }
+    this.modalService.open('modal-view-project');
+
+  }
   openModal(){
     this.modalService.open('modal-add-project');
   }
@@ -208,11 +236,15 @@ openEditModal(projectId: number | undefined){
   if (projectId){
     this.thisProjectId = projectId;
   }
+
   console.log('project id is', this.thisProjectId)
     this.modalService.open('modal-edit-project');
   }
+
   closeModal(){
 
     this.modalService.close();
   }
+
+  //concatanate
 }

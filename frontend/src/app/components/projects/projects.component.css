@@ -12,3 +12,13 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
     width: fit-content; /* Adjust width based on content */
 }
+
+.view-button-style {
+    margin-left: 93%;
+    font-weight: bold;
+    cursor: pointer;
+}
+.clickable-item {
+    cursor: pointer;
+    transition: text-decoration 0.3s; 
+}
