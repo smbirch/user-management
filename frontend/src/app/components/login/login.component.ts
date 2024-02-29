@@ -1,10 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CredentialsDto, UserServiceService} from "../../../services/user-service.service";
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { CredentialsDto, UserServiceService } from "../../../services/user-service.service";
+import { Router } from '@angular/router';
 import {Company} from "../../../models/company";
 import {Team} from "../../../models/team";
-import {User} from "../../../models/user";
-
 
 @Component({
   selector: 'app-login',
@@ -13,14 +11,15 @@ import {User} from "../../../models/user";
 })
 export class LoginComponent {
 
-  credentials: CredentialsDto = {username: '', password: ''};
+  credentials: CredentialsDto = { username: '', password: '' };
+  loginError: boolean = false;
 
   constructor(private userService: UserServiceService, private router: Router) {
   }
 
   login() {
     this.userService.login(this.credentials).subscribe(
-      (user: User) => {
+      (user: any) => {
         console.log(user)
         // Save user info to local storage
         localStorage.setItem('currentUser', JSON.stringify({
@@ -51,12 +50,11 @@ export class LoginComponent {
         }
       },
       (error) => {
-        console.error('Login failed: ', error);
+        this.loginError = true;
+        setTimeout(() => {
+          this.loginError = false;
+        }, 5000);
       }
     );
-  }
-
-  goToCompanies() {
-    this.router.navigateByUrl('/companies');
   }
 }

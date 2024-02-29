@@ -7,7 +7,7 @@
   <div class="announcement-list">
     <div class="announcement" *ngFor="let announcement of announcements">
       <div class="announcement-header">
-        <span class="name_title">{{ announcement.author.profile?.firstName }} {{ announcement.author.profile?.lastName }}</span>
+        <span class="name_title">{{ announcement.author.profile?.firstName }} {{ announcement.author.profile?.lastName }} </span>
         <span class="date">{{ announcement.date | date }}</span>
       </div>
       <div class="announcement-body">

@@ -12,11 +12,20 @@ import {UserServiceService} from "../../../services/user-service.service";
 export class NavbarComponent {
   showModal: boolean = false;
 
-  constructor(private userService: UserServiceService, private router: Router) {}
+  constructor(private userService: UserServiceService, private router: Router) {
+  }
+
+  isCurrentRoute(route: string): boolean {
+    return this.router.url === route;
+  }
 
 
   toggleModal() {
     this.showModal = !this.showModal;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 
   isAdmin(): boolean {
@@ -25,7 +34,6 @@ export class NavbarComponent {
     // Check if admin
     return user && user.admin;
   }
-
 
   logout() {
     this.toggleModal();
