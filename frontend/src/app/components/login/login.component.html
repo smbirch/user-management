@@ -1,3 +1,8 @@
+<div *ngIf="loginError" class="alert alert-danger fade-out" role="alert">
+  Incorrect username or password. Please try again.
+</div>
+
+
 <div class="login-container">
   <div class="header">
     <h1>Welcome to Our Application</h1>
@@ -14,4 +19,3 @@
     <button (click)="login()">Login</button>
   </div>
 </div>
-<!--<app-link-button linkText="/companies" text="Companies"></app-link-button>-->
