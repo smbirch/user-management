@@ -10,6 +10,7 @@ import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
+import com.cooksys.groupfinal.mappers.CompanyMapper;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
   private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
+    private final CompanyMapper companyMapper;
 	
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -62,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public FullUserDto createUser(UserRequestDto userRequestDto) {
 
-         if (!userRequestDto.getBasicUserDto().isAdmin()) {
+         if (!userRequestDto.getFullUserDto().isAdmin()) {
             throw new NotAuthorizedException("Not an admin");
          }
         User u = fullUserMapper.requestDtoToEntity(userRequestDto);
@@ -78,6 +80,7 @@ public class UserServiceImpl implements UserService {
         p.setLastName(userRequestDto.getProfile().getLastName());
         p.setPhone(userRequestDto.getProfile().getPhone());
         u.setProfile(p);
+        u.setCompanies(companyMapper.dtosToEntities(userRequestDto.getFullUserDto().getCompanies()));
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(u));
     }
 
