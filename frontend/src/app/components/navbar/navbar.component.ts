@@ -19,13 +19,16 @@ export class NavbarComponent {
     this.showModal = !this.showModal;
   }
 
+  closeModal() {
+    this.showModal = false;
+  }
+
   isAdmin(): boolean {
     // @ts-ignore
     const user = JSON.parse(localStorage.getItem('currentUser'));
     // Check if admin
     return user && user.admin;
   }
-
 
   logout() {
     this.toggleModal();

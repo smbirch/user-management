@@ -11,8 +11,8 @@
 </div>
 
 <div class="modal" *ngIf="showModal">
-  <a class="modal-link" routerLink="/home">Home</a>
-  <a class="modal-link" routerLink="/teams">Teams</a>
-  <a class="modal-link" routerLink="/users-registry">Users Registry</a>
-  <a class="modal-link" (click)="logout()">Logout</a>
+  <a class="modal-link" (click)="closeModal()" routerLink="/home">Home</a>
+  <a class="modal-link" (click)="closeModal()" routerLink="/teams">Teams</a>
+  <a class="modal-link" (click)="closeModal()" routerLink="/users-registry">Users Registry</a>
+  <a class="modal-link" (click)="logout(); closeModal()">Logout</a>
 </div>
