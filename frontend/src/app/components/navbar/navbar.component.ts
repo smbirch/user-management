@@ -12,7 +12,8 @@ import {UserServiceService} from "../../../services/user-service.service";
 export class NavbarComponent {
   showModal: boolean = false;
 
-  constructor(private userService: UserServiceService, private router: Router) {}
+  constructor(private userService: UserServiceService, private router: Router) {
+  }
 
 
   toggleModal() {

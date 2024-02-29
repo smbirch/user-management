@@ -13,6 +13,6 @@
 <div class="modal" *ngIf="showModal">
   <a class="modal-link" (click)="closeModal()" routerLink="/home">Home</a>
   <a class="modal-link" (click)="closeModal()" routerLink="/teams">Teams</a>
-  <a class="modal-link" (click)="closeModal()" routerLink="/users-registry">Users Registry</a>
+  <a *ngIf="isAdmin()" class="modal-link" (click)="closeModal()" routerLink="/users-registry">Users Registry</a>
   <a class="modal-link" (click)="logout(); closeModal()">Logout</a>
 </div>
