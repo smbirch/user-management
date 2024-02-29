@@ -21,16 +21,18 @@ export class TeamService {
     return this.http.get<Team[]>(`${this.teamsUrl}/${companyId}/team`);
    }
 
-   public saveTeam(TeamDto:any,BasicUserDto:any) {
+   public saveTeam(companyId:number, TeamDto:any):Observable<Team[]> {
     console.log('teamdto',TeamDto);
-    console.log('basicUserDto',BasicUserDto);
-    return this.http.post<Team>(this.teamsUrl,TeamDto, BasicUserDto);
+    return this.http.post<Team[]>(`http://localhost:8080/company/${companyId}/teams`,TeamDto);
    }
    public getTestTeam(){
     return this.http.get<Team[]>('http://localhost:8080/company/6/teams');
     console.log('in test team');
    }
 
+   getTeamByCompanyId(companyId: number, teamId:number): Observable<any>{
+    return this.http.get<Team[]>(`http://localhost:8080/company/${companyId}/teams/${teamId}`);
+   }
   
    //probably need to implement some error handling.
 }

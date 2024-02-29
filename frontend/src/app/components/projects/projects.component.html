@@ -1,1 +1,48 @@
-<p>projects works!</p>
+<h1 class = "page-title">Projects</h1>
+<div class = "all-items-container">
+    <button (click)="openModal()">New Project</button>
+<div class = "projects container">
+
+    <div *ngFor="let project of projects" class="project-bubble">
+        <p class = "clickable-item" (click)="openDescriptionModal(project)">{{project.name}}</p>
+        <p>{{project.description}}</p>
+
+        <button (click)="openEditModal(project.id)">edit</button>
+    </div>
+
+</div>
+
+</div>
+
+<ww-modal id = "modal-add-project">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
+    <h1>Add a Project</h1>
+    <div class="text-container">
+        <input class="text-input" type="text" placeholder=" new project name" [(ngModel)]="newProjectName">
+        <textarea class ="text-area" name="" id="" cols="30" rows="10" [(ngModel)]="newProjectDescription"></textarea>
+    </div>
+    
+    
+    <button (click)="closeModal(); createProject()" class="button-style">Submit</button>
+    
+</ww-modal>
+
+<ww-modal id = "modal-edit-project">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
+    <h1>Edit a Project</h1>
+    <div class="text-container">
+        <input class="text-input" type="text" placeholder=" new project name" [(ngModel)]="newProjectName">
+        <textarea class ="text-area" name="" id="" cols="30" rows="10" [(ngModel)]="newProjectDescription"></textarea>
+    </div>
+    
+    
+    <button (click)="closeModal(); editProject()" class="button-style">Submit</button>
+    
+</ww-modal>
+
+<ww-modal id = "modal-view-project">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
+    <h1>{{modalData.name}}</h1>
+    <p>{{modalData.description}}</p>
+    
+</ww-modal>

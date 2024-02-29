@@ -1,5 +1,5 @@
 .login-container {
-  background-color: #333;
+  background-color: #051622;
   color: #fff;
   height: 100vh;
   display: flex;
@@ -14,33 +14,77 @@
 }
 
 .login-form {
-  border: 2px solid #ddd;
+  border: 2px solid rgb(207, 178, 122);
+  box-shadow: 1px 1px 5px white;
   padding: 10%;
-  border-radius: 5px;
+  border-radius: 10px;
+  align-items: center;
 }
 
 .input-group {
   margin-bottom: 15px;
+  border: none;
 }
 
 .input-group input {
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  color: #1BA098;
+  background-color: #051622;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  text-align: center;
 }
 
 button {
-  width: 100%;
+  width: 70%;
   padding: 10px;
   font-size: 16px;
-  background-color: #3d5169;
+  background-color: #1BA098;
+  border-width: 3px;
+  border-color: #1BA098;
+  border-style: solid;
   color: #fff;
-  border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
+  margin-top: 50px;
+  margin-bottom: -5px;
+  margin-left: 15%;
 }
 
 button:hover {
-  background-color: #d3d3d3;
+  background-color: #051622;
+}
+
+.alert {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+
+.fade-out {
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

@@ -1,0 +1,49 @@
+body {
+  background-color: #111;
+  color: #fff;
+  font-size: 24px;
+}
+
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+.user-table {
+  width: 70%;
+  margin: 0 auto;
+  background-color: #333;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-row {
+  display: flex;
+  border-bottom: 1px solid #555;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.user-row.header {
+  font-weight: bold;
+}
+
+.user-cell {
+  flex: 1;
+  padding: 10px;
+  color: #cccccc;
+}
+
+.add-user-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #525964;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-user-button:hover {
+  background-color: #4d48e1;
+}

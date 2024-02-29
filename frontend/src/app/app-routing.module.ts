@@ -12,7 +12,7 @@ import {CompaniesComponent} from "./components/companies/companies.component";
 const routes: Routes = [
   { path: '', component: AppComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'projects', component: ProjectsComponent,  canActivate: [AuthGuard] },
+  { path: 'projects/:teamId', component: ProjectsComponent,  canActivate: [AuthGuard] },
   { path: 'companies', component: CompaniesComponent,  canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent,  canActivate: [AuthGuard] },
   { path: 'teams', component: TeamsComponent,  canActivate: [AuthGuard] },

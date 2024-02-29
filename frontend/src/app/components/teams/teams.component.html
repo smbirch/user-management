@@ -2,12 +2,12 @@
 <div class="teams-container">
     <div *ngFor="let team of teams" class = "team-item">
 
-        <span class ="team-name-style">{{team.name}}</span>
+        <span class ="clickable-item" (click)="goToProjects(team.id)">{{team.name}}</span>
         <p>{{team.description}}</p>
         <span class ="team-numofprojects-style"></span>
        <div class="test-container">
         <div *ngFor="let user of team.teammates" class="team-user-container">
-            <p class = "team-user-item">{{user.firstName}} {{user.lastName}}</p>
+            <p class = "team-user-item">{{user.firstName}} {{user.lastName?.charAt(0)}}.</p>
         </div>
        </div>
 
@@ -29,22 +29,25 @@
 
 <div>
   <ww-modal id = "modal-add-team">
+    <button (click)="closeModal()" style="margin-left: 93%;">X</button>
     <h1>Add a Team Modal</h1>
     <input type="text" placeholder="team name" [(ngModel)]="newTeamName">
     <input type="text" placeholder="description" [(ngModel)]="newTeamDescription">
     <h2>Select Users</h2>
-    <select [(ngModel)]="selectedUsers" multiple>
-      <option *ngFor="let user of users" [value]="user">{{ user.firstName }}</option>
+    <select [(ngModel)]="selectedUsers" multiple class="select-style">
+      <option *ngFor="let user of users" [value]="user">{{ user.firstName }} {{user.lastName}}</option>
     </select>
     
 
     <h2>selected users</h2>
-    <ul>
-      <li *ngFor="let user of selectedUsers" style="text-decoration: none;">{{user.firstName}} {{user.lastName}}</li>
+   <div class="selected-users">
+    <ul style="list-style: none;">
+      <li *ngFor="let user of selectedUsers" style="text-decoration: none;">{{user.firstName}} {{user.lastName?.charAt(0)}}.</li>
     </ul>
+   </div>
     
     
-    <button (click)="closeModal(); createTeam();" class="button-style">Close</button>
+    <button (click)="closeModal(); createTeam();" class="button-style">submit</button>
     <button (click)="clearSelection()">clear selection</button>
 </ww-modal>
 </div>

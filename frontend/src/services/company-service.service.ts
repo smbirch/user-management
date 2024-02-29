@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Company} from "../models/company";
 import {Observable, of, Timestamp} from "rxjs";
+import {FullUserDto} from "../app/full-user-dto";
 
 
 @Injectable({
@@ -23,5 +24,10 @@ export class CompanyServiceService {
     } else {
       return of([]); // return nothing if nothing is found
     }
+  }
+
+  getAllTotalUsers(companyId: number): Observable<FullUserDto[]> {
+    const url = `${this.companyUrl}/${companyId}/total-users`;
+    return this.http.get<FullUserDto[]>(url);
   }
 }

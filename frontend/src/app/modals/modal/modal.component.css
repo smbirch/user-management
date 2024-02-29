@@ -21,7 +21,7 @@ ww-modal {
 body.dark-mode .ww-modal {
     background-color: rgb(91, 91, 91);
 }
-  
+
 body.dark-mode .ww-modal .ww-modal-body {
 background: rgb(91, 91, 91);
 color: #fff;

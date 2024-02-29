@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { User } from 'src/models/user';
-import { Team } from 'src/models/team';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Announcement } from 'src/models/announcement';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Announcement} from 'src/models/announcement';
+
+class AnnouncementDto {
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +12,43 @@ import { Announcement } from 'src/models/announcement';
 export class AnnouncementService {
   private announcementsUrl = 'http://localhost:8080/company';
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) {
+  }
+
 
   public findAll(): Observable<Announcement[]> {
-    // Parse the companies object from local storage
-    const companiesString = localStorage.getItem('selectedCompany');
-    if (!companiesString) {
-      throw new Error('Companies data not found in local storage.');
-      // Handle the case where companies data is not found
+    let companyId: number;
+
+    const currentUserString = localStorage.getItem('currentUser');
+    if (!currentUserString) {
+      throw new Error('Current user data not found in local storage.');
     }
-    const companies = JSON.parse(companiesString);
+    const currentUser = JSON.parse(currentUserString);
+    const isAdmin = currentUser.admin;
 
-    const companyId = companies.id;
-
-    if (!companyId) {
-      throw new Error('Company ID not found in companies data.');
-    //   TODO: redirect user to selection page and try again
+    if (isAdmin) {
+      const selectedCompanyString = localStorage.getItem('selectedCompany');
+      if (!selectedCompanyString) {
+        throw new Error('Selected company data not found in local storage.');
+      }
+      const selectedCompany = JSON.parse(selectedCompanyString);
+      companyId = selectedCompany.id;
+    } else {
+      const companiesString = localStorage.getItem('companies');
+      if (!companiesString) {
+        throw new Error('Companies data not found in local storage.');
+      }
+      const companies = JSON.parse(companiesString);
+      companyId = companies[0].id;
     }
 
     const url = `${this.announcementsUrl}/${companyId}/announcements`;
     return this.http.get<Announcement[]>(url);
   }
 
-  public saveAnnouncement(announcement: Announcement): Observable<Announcement> {
-    return this.http.post<Announcement>(this.announcementsUrl, announcement);
+  public saveAnnouncement(companyId: number, announcement: AnnouncementDto): Observable<Announcement> {
+    const url = `${this.announcementsUrl}/${companyId}/announcements`;
+    return this.http.post<Announcement>(url, announcement);
   }
 }

@@ -7,14 +7,39 @@
   }
   
   .team-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: rgb(31, 52, 77);
     padding: 20px;
-    
   }
+
+  .team-name-style {
+    color: white;
+  }
+
+  .selected-users{
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+  }
+  ul {
+    padding: 40px;
+  }
+
+
   .test-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);  /* Adjust minmax for your needs */
     gap: 10px; /* Space between items */
   }
-  
+  .clickable-item {
+    cursor: pointer;
+    transition: text-decoration 0.3s; 
+}
+
+.clickable-item:hover {
+    text-decoration: underline; 
+}
+
+.select-style{
+  width: 25%;
+}

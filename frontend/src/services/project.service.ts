@@ -16,7 +16,16 @@ export class ProjectService {
     return this.http.get<Project []>(this.projectsUrl);
    }
 
-   public save(project: Project) {
-    return this.http.put<Project>(this.projectsUrl,project);
+   public findProjects(companyId: number, teamId:number): Observable<Project[]> {
+    console.log('fetching projects...');
+    return this.http.get<Project[]> (`http://localhost:8080/company/${companyId}/teams/${teamId}/projects`);
+   }
+   public save(companyId: number, teamId:number, ProjectDto: any) {
+    return this.http.post<Project>(`http://localhost:8080/company/${companyId}/teams/${teamId}/projects`,ProjectDto);
+   }
+
+   public update(companyId: number, teamId:number, projectId: number, ProjectDto: any) {
+    console.log('in the project service method');
+    return this.http.patch<Project>(`http://localhost:8080/company/${companyId}/teams/${teamId}/projects/${projectId}`,ProjectDto);
    }
 }
