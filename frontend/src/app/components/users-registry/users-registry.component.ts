@@ -34,7 +34,7 @@ export class UsersRegistryComponent implements OnInit {
       this.companyService.getAllTotalUsers(companyId).subscribe(
         (data: FullUserDto[]) => {
           this.users = data;
-          console.log(data);
+          console.log(this.users);
         },
         (error: any) => {
           console.error('Error fetching users:', error);

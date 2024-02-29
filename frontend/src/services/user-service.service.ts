@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from 'src/models/user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-
-class UserRequestDto {
-}
+import {UserRequestDto} from "../app/user-request-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +20,7 @@ export class UserServiceService {
   }
 
   public save(user: UserRequestDto) {
-    console.log(user)
+    console.log("here")
     return this.http.post<User>(this.usersUrl, user);
   }
 
