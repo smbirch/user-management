@@ -246,5 +246,5 @@ openEditModal(projectId: number | undefined){
     this.modalService.close();
   }
 
-  //concatanate
+  
 }
