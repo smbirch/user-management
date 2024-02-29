@@ -1,6 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserServiceService} from "../../../services/user-service.service";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { UserServiceService } from "../../../services/user-service.service";
+import {ProfileDto} from "../../profile-dto";
 import {UserRequestDto} from "../../user-request-dto";
+import {BasicUserDto} from "../../basic-user-dto";
+import {FullUserDto} from "../../full-user-dto";
+import {User} from "../../../models/user";
+import {CredentialsDto} from "../../credentials-dto";
 
 @Component({
   selector: 'app-add-user-modal',
@@ -11,10 +16,12 @@ export class AddUserModalComponent {
   @Input() showModal: boolean = false;
   @Output() closeModal = new EventEmitter<void>();
   makeAdmin: boolean = false;
+
+  // Properties to store user input
   username: string = "";
   password: string = "";
   firstName: string = "";
-  lastName: string  = "";
+  lastName: string = "";
   email: string = "";
   phone: string = "";
 
@@ -25,26 +32,68 @@ export class AddUserModalComponent {
   }
 
   onSubmit() {
-    const newUserRequest: UserRequestDto = {
-      credentials: {
-        username: this.username,
-        password: this.password
-      },
-      profile: {
-        firstname: this.firstName,
-        lastname: this.lastName,
-        email: this.email,
-        phone: this.phone
-      },
-      isAdmin: this.makeAdmin
+    // Retrieve the current user's data from local storage
+    const currentUserJson = localStorage.getItem('currentUser');
+    if (!currentUserJson) {
+      console.error('Current user data not found in local storage.');
+      return;
+    }
+
+    // Parse the JSON string into a User object
+    const currentUser: User = JSON.parse(currentUserJson);
+
+    // Create credentials object
+    const credentials: CredentialsDto = {
+      username: this.username,
+      password: this.password
     };
 
-    this.userService.save(newUserRequest).subscribe(
+    // Create profile object
+    const profile: ProfileDto = {
+      firstname: this.firstName,
+      lastname: this.lastName,
+      email: this.email,
+      phone: this.phone
+    };
+
+    // Create user request object and populate basicUserDto with the current user's data
+
+    const userRequest: UserRequestDto = {
+      credentials: credentials,
+      profile: profile,
+      admin: this.makeAdmin,
+      basicUserDto: {
+        // @ts-ignore
+        id: currentUser.id,
+        profile: {
+          // @ts-ignore
+          firstname: currentUser.firstName,
+          // @ts-ignore
+          lastname: currentUser.lastName,
+          // @ts-ignore
+          email: currentUser.email,
+          // @ts-ignore
+          phone: currentUser.phone
+        },
+        // @ts-ignore
+        admin: currentUser.admin,
+        // @ts-ignore
+        active: currentUser.active,
+        // @ts-ignore
+        status: currentUser.status
+      }
+    };
+
+    // Call the UserService save method
+    this.userService.save(userRequest).subscribe(
       (response: any) => {
+        // Handle success
         console.log('User saved:', response);
+        // Optionally, close the modal after saving
         this.closeModal.emit();
       },
       (error: any) => {
+        // Handle error
         console.error('Error saving user:', error);
       }
     );
