@@ -2,12 +2,21 @@
   <div class="announcement-header">
     <h1 class="announcement-title">Announcements</h1>
 
-    <button *ngIf="isAdmin()" class="new-announcement-button" (click)="openModal()">New</button>
+    <button
+      *ngIf="isAdmin()"
+      class="new-announcement-button"
+      (click)="openModal()"
+    >
+      New
+    </button>
   </div>
   <div class="announcement-list">
     <div class="announcement" *ngFor="let announcement of announcements">
       <div class="announcement-header">
-        <span class="name_title">{{ announcement.author.profile?.firstName }} {{ announcement.author.profile?.lastName }} </span>
+        <span class="name_title"
+          >{{ announcement.author.profile?.firstName }}
+          {{ announcement.author.profile?.lastName }}
+        </span>
         <span class="date">{{ announcement.date | date }}</span>
       </div>
       <div class="announcement-body">
@@ -16,4 +25,8 @@
       </div>
     </div>
   </div>
-  <app-create-announcement-modal [showModal]="showModal" [authorName]="authorName"></app-create-announcement-modal></div>
+  <app-create-announcement-modal
+    [showModal]="showModal"
+    [authorName]="authorName"
+  ></app-create-announcement-modal>
+</div>
