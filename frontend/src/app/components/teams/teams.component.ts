@@ -9,6 +9,8 @@ import { OnInit } from '@angular/core';
 import { TeamService } from 'src/services/team.service';
 import { ModalsService } from 'src/services/modal.service';
 import { UserServiceService } from 'src/services/user-service.service';
+import { Location } from '@angular/common';
+
 import { map } from 'rxjs';
 
 @Component({
@@ -42,7 +44,7 @@ export class TeamsComponent implements OnInit{
   companyId?: number;
 
  
-  constructor(private teamService: TeamService, protected modalService: ModalsService, private userService: UserServiceService, private router: Router){}
+  constructor(private teamService: TeamService, protected modalService: ModalsService, private userService: UserServiceService, private router: Router, private location: Location){}
   ngOnInit(){
     this.initializeCurrentUser();
     console.log('companyId',this.companyId);
@@ -238,13 +240,19 @@ createTeam(){
     this.teamService.saveTeam(this.companyId, TeamDto).subscribe({
       next: (response) => {
         console.log('Team saved successfully', response);
+        
       },
       error: (error) => {
         console.error('Error saving team', error);
       },
       complete: () => console.log('Completed') 
+
+      
     });
   }
+   //auto reload
+   this.location.replaceState('/teams');
+   window.location.reload();
 }
   
   openModal(){
@@ -268,5 +276,7 @@ createTeam(){
       console.error('Team ID is undefined. Cannot navigate to projects.');
     }
   }
+
+  
   
 }
