@@ -4,16 +4,17 @@
 
     <span class="close" (click)="onCloseModal()">&times;</span>
 
-    <form>
-      <input type="text" placeholder="First Name">
-      <input type="text" placeholder="Last Name">
-      <input type="text" placeholder="Email">
-      <input type="password" placeholder="Password">
-      <input type="password" placeholder="Confirm Password">
+    <form (ngSubmit)="onSubmit()">
+      <input type="text" placeholder="First Name" [(ngModel)]="firstName" name="firstName">
+      <input type="text" placeholder="Last Name" [(ngModel)]="lastName" name="lastName">
+      <input type="text" placeholder="Email" [(ngModel)]="email" name="email">
+      <input type="password" placeholder="Password" [(ngModel)]="password" name="password">
+      <input type="password" placeholder="Confirm Password" name="confirmPassword">
       <div class="admin-toggle">
         <label for="adminToggle">Make Admin?</label>
-        <input type="checkbox" id="adminToggle">
+        <input type="checkbox" id="adminToggle" [(ngModel)]="makeAdmin" name="makeAdmin">
       </div>
+      <button type="submit">Submit</button>
     </form>
   </div>
 </div>

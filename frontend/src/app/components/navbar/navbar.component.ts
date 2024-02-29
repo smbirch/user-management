@@ -15,6 +15,10 @@ export class NavbarComponent {
   constructor(private userService: UserServiceService, private router: Router) {
   }
 
+  isCurrentRoute(route: string): boolean {
+    return this.router.url === route;
+  }
+
 
   toggleModal() {
     this.showModal = !this.showModal;
