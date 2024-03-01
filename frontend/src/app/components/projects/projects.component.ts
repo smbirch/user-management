@@ -25,6 +25,7 @@ export class ProjectsComponent implements OnInit,OnDestroy{
   team?: Team[];
   teamDto: any;
   thisProjectId?: number;
+  teamName?: string;
 
   lastEdited?: Timestamp<number>;
 
@@ -178,6 +179,8 @@ export class ProjectsComponent implements OnInit,OnDestroy{
       this.teamService.getTeamByCompanyId(this.companyId,this.teamId).subscribe({
         next: (data) => {
           this.teamDto = data;
+          this.teamName = this.teamDto.name;
+
           console.log('team dto', this.teamDto)
         },
         error: (error) => console.error('there was a problem getting the team', error.message)
@@ -207,12 +210,40 @@ export class ProjectsComponent implements OnInit,OnDestroy{
   //Get current user info
   initializeCurrentUser(){
     const currentUserString = localStorage.getItem('currentUser');
-    const currentCompanyString = localStorage.getItem('selectedCompany');
+    let currentCompanyString = localStorage.getItem('selectedCompany');
+    let currentCompanyWorkerString = localStorage.getItem('companies');
+    console.log('companies',currentCompanyWorkerString)
+    console.log('current user', currentUserString)
+   
 
 
+
+    //this for an admin user
     if(currentUserString && currentCompanyString){
       const userDetails = JSON.parse(currentUserString);
       const companyDetail = JSON.parse(currentCompanyString);
+      
+
+      this.currentActive = userDetails.active;
+      this.currentAdmin = userDetails.admin;
+      this.currentFirstName = userDetails.firstName;
+      this.currentId = userDetails.id;
+      this.currentLoggedIn = userDetails.isLoggedIn;
+      this.currentLastName = userDetails.lastName;
+      this.currentStatus = userDetails.status;
+      this.companyId = companyDetail.id;
+
+      console.log('the company id is', this.companyId);
+      console.log('user is admin', this.currentAdmin);
+    }
+
+   
+    //this is for a standard user
+    if(currentUserString && currentCompanyWorkerString){
+      console.log('this is a standard user');
+      const userDetails = JSON.parse(currentUserString);
+      const workerDetail = JSON.parse(currentCompanyWorkerString);
+      
 
       this.currentActive = userDetails.active;
       this.currentAdmin = userDetails.admin;
@@ -221,12 +252,11 @@ export class ProjectsComponent implements OnInit,OnDestroy{
       this.currentLoggedIn =userDetails.isLoggedIn;
       this.currentLastName = userDetails.lastName
       this.currentStatus = userDetails.status;
-      this.companyId = companyDetail.id;
+      this.companyId = workerDetail[0].id;
 
       console.log('the company id is', this.companyId);
       console.log('user is admin', this.currentAdmin);
     }
-   
     
   }
 
@@ -256,6 +286,10 @@ openEditModal(projectId: number | undefined){
   closeModal(){
 
     this.modalService.close();
+  }
+
+  getTeamInfo(){
+
   }
 
   
