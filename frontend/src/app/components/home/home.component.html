@@ -1,14 +1,19 @@
 <div class="home-container">
   <div class="announcement-header">
-    <h1 class="announcement-title">Announcements</h1>
-
-    <button
-      *ngIf="isAdmin()"
-      class="new-announcement-button"
-      (click)="openModal()"
-    >
-      New
-    </button>
+    <div>
+      <h1 class="announcement-title">Announcements</h1>
+    </div>
+    <div class="con-con">
+      <div class="new-announcement-button-container">
+        <button
+          *ngIf="isAdmin()"
+          class="new-announcement-button"
+          (click)="openModal()"
+        >
+          New
+        </button>
+      </div>
+    </div>
   </div>
   <div class="announcement-list">
     <div class="announcement" *ngFor="let announcement of announcements">

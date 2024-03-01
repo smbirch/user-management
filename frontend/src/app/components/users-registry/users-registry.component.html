@@ -1,6 +1,8 @@
 <div class="container">
   <h1>User Registry</h1>
-  <p class="overview">A general view of the members of your organization</p>
+  <p class="overview">
+    A general view of all your members in your organization
+  </p>
 
   <div class="user-table">
     <div class="user-row header">
@@ -18,8 +20,18 @@
       </div>
       <div class="user-cell">{{ user.profile.email }}</div>
       <div class="user-cell">{{ getUserTeam(user) }}</div>
-      <div class="user-cell-active">{{ user.active }}</div>
-      <div class="user-cell-admin">{{ user.admin }}</div>
+      <div
+        class="user-cell"
+        [ngClass]="{ active: user.active, inactive: !user.active }"
+      >
+        {{ user.active }}
+      </div>
+      <div
+        class="user-cell"
+        [ngClass]="{ admin: user.admin, 'not-admin': !user.admin }"
+      >
+        {{ user.admin }}
+      </div>
       <div class="user-cell">{{ user.status }}</div>
     </div>
   </div>

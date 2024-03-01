@@ -10,9 +10,9 @@
 
 .announcement-header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
   width: 75%;
   border-bottom: 2px solid #deb992;
 }
@@ -21,7 +21,6 @@
   display: flex;
   font-weight: 100;
   text-align: center;
-  margin-bottom: 40px;
 }
 
 .announcement-items {
@@ -30,10 +29,15 @@
   align-items: center;
 }
 
-.new-announcement-button {
+.new-announcement-button-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 10%;
-  padding: 10px;
+  /* padding: 5px 5px; */
   font-size: 14px;
+  margin-bottom: 10px;
   background-color: #1ba098;
   border-width: 3px;
   border-color: #1ba098;
@@ -41,11 +45,9 @@
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.new-announcement-button:hover {
-  background-color: #051622;
-  border-color: #1ba098;
+  border: none;
+  text-align: center;
+  margin-left: auto;
 }
 
 .announcement-list {
@@ -82,4 +84,29 @@
 
 .announcement-list {
   justify-content: center;
+}
+
+.new-announcement-button {
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  background-color: #1ba098;
+  cursor: pointer;
+  color: white;
+}
+
+.con-con {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
