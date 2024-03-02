@@ -10,7 +10,7 @@ import {UsersRegistryComponent} from "./components/users-registry/users-registry
 import {CompaniesComponent} from "./components/companies/companies.component";
 
 const routes: Routes = [
-  { path: '', component: AppComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'projects/:teamId', component: ProjectsComponent,  canActivate: [AuthGuard] },
   { path: 'companies', component: CompaniesComponent,  canActivate: [AuthGuard] },
